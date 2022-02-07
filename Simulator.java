@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.awt.Color;
 
+
 /**
  * A simple predator-prey simulator, based on a rectangular field
  * containing rabbits and foxes.
@@ -31,6 +32,8 @@ public class Simulator
     private int step;
     // A graphical view of the simulation.
     private SimulatorView view;
+    
+    private int x;
     
     /**
      * Construct a simulation field with default size.
