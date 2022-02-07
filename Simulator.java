@@ -34,6 +34,7 @@ public class Simulator
     private SimulatorView view;
     
     private int x;
+    private int y;
     
     /**
      * Construct a simulation field with default size.
