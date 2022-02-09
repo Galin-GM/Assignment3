@@ -15,11 +15,11 @@ public class Buffalo extends Animal
     // The age at which a antelope can start to breed.
     private static final int BREEDING_AGE = 5;
     // The age to which a antelope can live.
-    private static final int MAX_AGE = 40;
+    private static final int MAX_AGE = 10;
     // The likelihood of a antelope breeding.
     private static final double BREEDING_PROBABILITY = 0.12;
     // The maximum number of births.
-    private static final int MAX_LITTER_SIZE = 4;
+    private static final int MAX_LITTER_SIZE = 2;
     // A shared random number generator to control breeding.
     private static final Random rand = Randomizer.getRandom();
     
