@@ -33,6 +33,8 @@ public class Simulator
     // A graphical view of the simulation.
     private SimulatorView view;
     
+    private int x;
+    
     /**
      * Construct a simulation field with default size.
      */
