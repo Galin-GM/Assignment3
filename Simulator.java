@@ -22,7 +22,9 @@ public class Simulator
     // The probability that a fox will be created in any given grid position.
     private static final double LION_CREATION_PROBABILITY = 0.02;
     // The probability that a rabbit will be created in any given grid position.
-    private static final double ANTELOPE_CREATION_PROBABILITY = 0.08;    
+    private static final double ANTELOPE_CREATION_PROBABILITY = 0.08;  
+    
+    private static final double TIGER_CREATION_PROBABILITY = 0.08;
 
     // List of animals in the field.
     private List<Animal> animals;
@@ -63,6 +65,7 @@ public class Simulator
         view = new SimulatorView(depth, width);
         view.setColor(Antelope.class, Color.ORANGE);
         view.setColor(Lion.class, Color.BLUE);
+        view.setColor(Tiger.class, Color.RED);
         
         // Setup a valid starting point.
         reset();
@@ -147,6 +150,11 @@ public class Simulator
                     Location location = new Location(row, col);
                     Antelope antelope = new Antelope(true, field, location);
                     animals.add(antelope);
+                }
+                else if(rand.nextDouble() <= TIGER_CREATION_PROBABILITY) {
+                    Location location = new Location(row, col);
+                    Tiger tiger = new Tiger(true, field, location);
+                    animals.add(tiger);
                 }
                 // else leave the location empty.
             }
