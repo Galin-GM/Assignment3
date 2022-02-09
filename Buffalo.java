@@ -8,7 +8,7 @@ import java.util.Random;
  * @author David J. Barnes and Michael Kölling
  * @version 2016.02.29 (2)
  */
-public class Antelope extends Animal
+public class Buffalo extends Animal
 {
     // Characteristics shared by all antelopes (class variables).
 
@@ -36,7 +36,7 @@ public class Antelope extends Animal
      * @param field The field currently occupied.
      * @param location The location within the field.
      */
-    public Antelope(boolean randomAge, Field field, Location location)
+    public Buffalo(boolean randomAge, Field field, Location location)
     {
         super(field, location);
         age = 0;
@@ -93,7 +93,7 @@ public class Antelope extends Animal
         int births = breed();
         for(int b = 0; b < births && free.size() > 0; b++) {
             Location loc = free.remove(0);
-            Antelope young = new Antelope(false, field, loc);
+            Buffalo young = new Buffalo(false, field, loc);
             newAntelopes.add(young);
         }
     }

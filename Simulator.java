@@ -21,8 +21,10 @@ public class Simulator
     private static final int DEFAULT_DEPTH = 80;
     // The probability that a fox will be created in any given grid position.
     private static final double LION_CREATION_PROBABILITY = 0.02;
-    // The probability that a rabbit will be created in any given grid position.
-    private static final double ANTELOPE_CREATION_PROBABILITY = 0.08;    
+    // The probability that a antelope will be created in any given grid position.
+    private static final double ANTELOPE_CREATION_PROBABILITY = 0.08;
+    // The probability that a buffalo will be created in any given grid position.
+    private static final double BUFFALO_CREATION_PROBABILITY = 0.08; 
 
     // List of animals in the field.
     private List<Animal> animals;
@@ -63,6 +65,7 @@ public class Simulator
         view = new SimulatorView(depth, width);
         view.setColor(Antelope.class, Color.ORANGE);
         view.setColor(Lion.class, Color.BLUE);
+        view.setColor(Buffalo.class, Color.BLACK);
         
         // Setup a valid starting point.
         reset();
@@ -147,6 +150,11 @@ public class Simulator
                     Location location = new Location(row, col);
                     Antelope antelope = new Antelope(true, field, location);
                     animals.add(antelope);
+                }
+                else if(rand.nextDouble() <= BUFFALO_CREATION_PROBABILITY) {
+                    Location location = new Location(row, col);
+                    Buffalo buffalo = new Buffalo(true, field, location);
+                    animals.add(buffalo);
                 }
                 // else leave the location empty.
             }
