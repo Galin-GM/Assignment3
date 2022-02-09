@@ -15,17 +15,24 @@ public abstract class Animal
     // The animal's position in the field.
     private Location location;
     
+    private boolean isNocturnal;
+    
     /**
      * Create a new animal at location in field.
      * 
      * @param field The field currently occupied.
      * @param location The location within the field.
      */
-    public Animal(Field field, Location location)
+    public Animal(Field field, Location location, boolean isNocturnal)
     {
         alive = true;
+        this.isNocturnal = isNocturnal;
         this.field = field;
         setLocation(location);
+    }
+    
+    protected boolean getIsNocturnal() {
+        return isNocturnal;
     }
     
     /**

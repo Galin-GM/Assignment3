@@ -41,9 +41,9 @@ public class Lion extends Animal
      * @param field The field currently occupied.
      * @param location The location within the field.
      */
-    public Lion(boolean randomAge, Field field, Location location)
+    public Lion(boolean randomAge, Field field, Location location, boolean isNocturnal)
     {
-        super(field, location);
+        super(field, location, isNocturnal);
         if(randomAge) {
             age = rand.nextInt(MAX_AGE);
             foodLevel = rand.nextInt(ANTELOPE_FOOD_VALUE);
@@ -145,7 +145,7 @@ public class Lion extends Animal
         int births = breed();
         for(int b = 0; b < births && free.size() > 0; b++) {
             Location loc = free.remove(0);
-            Lion young = new Lion(false, field, loc);
+            Lion young = new Lion(false, field, loc, false);
             newLions.add(young);
         }
     }

@@ -41,9 +41,9 @@ public class Tiger extends Animal
      * @param field The field currently occupied.
      * @param location The location within the field.
      */
-    public Tiger(boolean randomAge, Field field, Location location)
+    public Tiger(boolean randomAge, Field field, Location location, boolean isNocturnal)
     {
-        super(field, location);
+        super(field, location, isNocturnal);
         if(randomAge) {
             age = rand.nextInt(MAX_AGE);
             foodLevel = rand.nextInt(ANTELOPE_FOOD_VALUE);
@@ -145,7 +145,7 @@ public class Tiger extends Animal
         int births = breed();
         for(int b = 0; b < births && free.size() > 0; b++) {
             Location loc = free.remove(0);
-            Tiger young = new Tiger(false, field, loc);
+            Tiger young = new Tiger(false, field, loc, true);
             newTigers.add(young);
         }
     }

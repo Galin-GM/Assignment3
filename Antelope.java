@@ -36,9 +36,9 @@ public class Antelope extends Animal
      * @param field The field currently occupied.
      * @param location The location within the field.
      */
-    public Antelope(boolean randomAge, Field field, Location location)
+    public Antelope(boolean randomAge, Field field, Location location, boolean isNocturnal)
     {
-        super(field, location);
+        super(field, location, isNocturnal);
         age = 0;
         if(randomAge) {
             age = rand.nextInt(MAX_AGE);
@@ -93,7 +93,7 @@ public class Antelope extends Animal
         int births = breed();
         for(int b = 0; b < births && free.size() > 0; b++) {
             Location loc = free.remove(0);
-            Antelope young = new Antelope(false, field, loc);
+            Antelope young = new Antelope(false, field, loc, false);
             newAntelopes.add(young);
         }
     }
