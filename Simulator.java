@@ -146,8 +146,8 @@ public class Simulator
                 }
                 else if(rand.nextDouble() <= RABBIT_CREATION_PROBABILITY) {
                     Location location = new Location(row, col);
-                    Antelope rabbit = new Antelope(true, field, location);
-                    animals.add(rabbit);
+                    Antelope antelope = new Antelope(true, field, location);
+                    animals.add(antelope);
                 }
                 // else leave the location empty.
             }
