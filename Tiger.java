@@ -9,7 +9,7 @@ import java.util.Random;
  * @author David J. Barnes and Michael Kölling
  * @version 2016.02.29 (2)
  */
-public class Lion extends Animal
+public class Tiger extends Animal
 {
     // Characteristics shared by all liones (class variables).
     
@@ -41,7 +41,7 @@ public class Lion extends Animal
      * @param field The field currently occupied.
      * @param location The location within the field.
      */
-    public Lion(boolean randomAge, Field field, Location location)
+    public Tiger(boolean randomAge, Field field, Location location)
     {
         super(field, location);
         if(randomAge) {
@@ -61,12 +61,12 @@ public class Lion extends Animal
      * @param field The field currently occupied.
      * @param newliones A list to return newly born liones.
      */
-    public void act(List<Animal> newLions)
+    public void act(List<Animal> newTigers)
     {
         incrementAge();
         incrementHunger();
         if(isAlive()) {
-            giveBirth(newLions);            
+            giveBirth(newTigers);            
             // Move towards a source of food if found.
             Location newLocation = findFood();
             if(newLocation == null) { 
@@ -136,7 +136,7 @@ public class Lion extends Animal
      * New births will be made into free adjacent locations.
      * @param newliones A list to return newly born liones.
      */
-    private void giveBirth(List<Animal> newLions)
+    private void giveBirth(List<Animal> newTigers)
     {
         // New liones are born into adjacent locations.
         // Get a list of adjacent free locations.
@@ -145,8 +145,8 @@ public class Lion extends Animal
         int births = breed();
         for(int b = 0; b < births && free.size() > 0; b++) {
             Location loc = free.remove(0);
-            Lion young = new Lion(false, field, loc);
-            newLions.add(young);
+            Tiger young = new Tiger(false, field, loc);
+            newTigers.add(young);
         }
     }
         
