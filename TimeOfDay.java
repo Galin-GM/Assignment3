@@ -29,6 +29,16 @@ public class TimeOfDay
         return isDay;
     }
     
+    public String dayOrNight()
+    {
+        if (isDay) {
+            return "Day";
+        }
+        else {
+            return "Night";
+        }
+    }
+    
     public void flipTime() {
         isDay = !isDay;
     }

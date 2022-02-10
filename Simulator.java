@@ -143,7 +143,7 @@ public class Simulator
         // Add the newly born foxes and rabbits to the main lists.
         animals.addAll(newAnimals);
 
-        view.showStatus(step, field);
+        view.showStatus(step, field, timeTracker.dayOrNight());
     }
         
     /**
@@ -156,7 +156,7 @@ public class Simulator
         populate();
         
         // Show the starting state in the view.
-        view.showStatus(step, field);
+        view.showStatus(step, field, timeTracker.dayOrNight());
     }
     
     /**
@@ -201,7 +201,7 @@ public class Simulator
         }
     }
     
-    public void trackTime() {
+    private void trackTime() {
         if (step % 5 == 0) {
             timeTracker.flipTime();
         }
