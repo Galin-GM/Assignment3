@@ -20,9 +20,17 @@ public class Simulator
     // The default depth of the grid.
     private static final int DEFAULT_DEPTH = 80;
     // The probability that a fox will be created in any given grid position.
-    private static final double FOX_CREATION_PROBABILITY = 0.02;
-    // The probability that a rabbit will be created in any given grid position.
-    private static final double RABBIT_CREATION_PROBABILITY = 0.08;    
+    private static final double LION_CREATION_PROBABILITY = 0.02;
+
+    // The probability that a antelope will be created in any given grid position.
+    private static final double ANTELOPE_CREATION_PROBABILITY = 0.08;
+    // The probability that a buffalo will be created in any given grid position.
+    private static final double BUFFALO_CREATION_PROBABILITY = 0.08; 
+
+    private static final double TIGER_CREATION_PROBABILITY = 0.08;
+    
+    private static final double HYENA_CREATION_PROBABILITY = 0.08;
+
 
     // List of animals in the field.
     private List<Animal> animals;
@@ -33,7 +41,12 @@ public class Simulator
     // A graphical view of the simulation.
     private SimulatorView view;
     
+
     private int x;
+
+    private TimeOfDay timeTracker;
+    
+
     
     /**
      * Construct a simulation field with default size.
@@ -59,11 +72,19 @@ public class Simulator
         
         animals = new ArrayList<>();
         field = new Field(depth, width);
+        timeTracker = new TimeOfDay();
 
         // Create a view of the state of each location in the field.
         view = new SimulatorView(depth, width);
-        view.setColor(Rabbit.class, Color.ORANGE);
-        view.setColor(Fox.class, Color.BLUE);
+        view.setColor(Antelope.class, Color.ORANGE);
+        view.setColor(Lion.class, Color.BLUE);
+
+        view.setColor(Buffalo.class, Color.BLACK);
+
+        view.setColor(Tiger.class, Color.RED);
+        
+        view.setColor(Hyena.class, Color.PINK);
+
         
         // Setup a valid starting point.
         reset();
@@ -87,7 +108,7 @@ public class Simulator
     {
         for(int step = 1; step <= numSteps && view.isViable(field); step++) {
             simulateOneStep();
-            // delay(60);   // uncomment this to run more slowly
+            //delay(300);   // uncomment this to run more slowly
         }
     }
     
@@ -99,13 +120,21 @@ public class Simulator
     public void simulateOneStep()
     {
         step++;
+        
+        trackTime();
 
         // Provide space for newborn animals.
         List<Animal> newAnimals = new ArrayList<>();        
         // Let all rabbits act.
         for(Iterator<Animal> it = animals.iterator(); it.hasNext(); ) {
             Animal animal = it.next();
-            animal.act(newAnimals);
+            if(!animal.getIsNocturnal() & timeTracker.isItDay()) {
+                animal.act(newAnimals);
+            }
+            else if(animal.getIsNocturnal() & !timeTracker.isItDay()) {
+                animal.act(newAnimals);
+            }
+            
             if(! animal.isAlive()) {
                 it.remove();
             }
@@ -139,18 +168,42 @@ public class Simulator
         field.clear();
         for(int row = 0; row < field.getDepth(); row++) {
             for(int col = 0; col < field.getWidth(); col++) {
-                if(rand.nextDouble() <= FOX_CREATION_PROBABILITY) {
+                if(rand.nextDouble() <= LION_CREATION_PROBABILITY) {
                     Location location = new Location(row, col);
-                    Fox fox = new Fox(true, field, location);
-                    animals.add(fox);
+                    Lion lion = new Lion(true, field, location, false);
+                    animals.add(lion);
                 }
-                else if(rand.nextDouble() <= RABBIT_CREATION_PROBABILITY) {
+                else if(rand.nextDouble() <= ANTELOPE_CREATION_PROBABILITY) {
                     Location location = new Location(row, col);
-                    Rabbit rabbit = new Rabbit(true, field, location);
-                    animals.add(rabbit);
+                    Antelope antelope = new Antelope(true, field, location, false);
+                    animals.add(antelope);
+                }
+
+                else if(rand.nextDouble() <= BUFFALO_CREATION_PROBABILITY) {
+                    Location location = new Location(row, col);
+                    Buffalo buffalo = new Buffalo(true, field, location, false);
+                    animals.add(buffalo);
+                }
+                else if(rand.nextDouble() <= TIGER_CREATION_PROBABILITY) {
+                    Location location = new Location(row, col);
+                    Tiger tiger = new Tiger(true, field, location, false);
+                    animals.add(tiger);
+
+                }
+                else if(rand.nextDouble() <= HYENA_CREATION_PROBABILITY) {
+                    Location location = new Location(row, col);
+                    Hyena hyena = new Hyena(true, field, location, true);
+                    animals.add(hyena);
+
                 }
                 // else leave the location empty.
             }
+        }
+    }
+    
+    public void trackTime() {
+        if (step % 5 == 0) {
+            timeTracker.flipTime();
         }
     }
     
