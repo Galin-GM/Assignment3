@@ -46,15 +46,15 @@ public class Buffalo extends Animal
     }
     
     /**
-     * This is what the antelope does most of the time - it runs 
+     * This is what the buffalo does most of the time - it runs 
      * around. Sometimes it will breed or die of old age.
-     * @param newAntelopes A list to return newly born Antelopes.
+     * @param newBuffalos A list to return newly born Antelopes.
      */
-    public void act(List<Animal> newAntelopes)
+    public void act(List<Animal> newBuffalos)
     {
         incrementAge();
         if(isAlive()) {
-            giveBirth(newAntelopes);            
+            giveBirth(newBuffalos);            
             // Try to move into a free location.
             Location newLocation = getField().freeAdjacentLocation(getLocation());
             if(newLocation != null) {
@@ -84,7 +84,7 @@ public class Buffalo extends Animal
      * New births will be made into free adjacent locations.
      * @param newAntelopes A list to return newly born antelopes.
      */
-    private void giveBirth(List<Animal> newAntelopes)
+    private void giveBirth(List<Animal> newBuffalos)
     {
         // New Antelopes are born into adjacent locations.
         // Get a list of adjacent free locations.
@@ -94,7 +94,7 @@ public class Buffalo extends Animal
         for(int b = 0; b < births && free.size() > 0; b++) {
             Location loc = free.remove(0);
             Buffalo young = new Buffalo(false, field, loc, false);
-            newAntelopes.add(young);
+            newBuffalos.add(young);
         }
     }
         

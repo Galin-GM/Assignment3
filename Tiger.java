@@ -36,7 +36,7 @@ public class Tiger extends Animal
     private int foodLevel;
 
     /**
-     * Create a lion. A lion can be created as a new born (age zero
+     * Create a tiger. A lion can be created as a new born (age zero
      * and not hungry) or with a random age and food level.
      * 
      * @param randomAge If true, the lion will have random age and hunger level.
