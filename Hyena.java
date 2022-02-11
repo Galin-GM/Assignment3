@@ -151,7 +151,7 @@ public class Hyena extends Animal
             Location where = it.next();
             Object nextAnimal = field.getObjectAt(where);
             
-            if(nextAnimal instanceof Antelope) {
+            if(nextAnimal instanceof Hyena) {
                 Hyena hyena = (Hyena) animal;
                 Hyena nextHyena = (Hyena) nextAnimal;
                 if(hyena.getSex() != nextHyena.getSex()) {

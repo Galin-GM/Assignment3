@@ -18,7 +18,7 @@ public class Buffalo extends Animal
     // The age to which a buffalo can live.
     private static final int MAX_AGE = 40;
     // The likelihood of a buffalo breeding.
-    private static final double BREEDING_PROBABILITY = 0.12;
+    private static final double BREEDING_PROBABILITY = 0.05;
     // The maximum number of births.
     private static final int MAX_LITTER_SIZE = 2;
     // A shared random number generator to control breeding.
@@ -100,7 +100,7 @@ public class Buffalo extends Animal
             Location where = it.next();
             Object nextAnimal = field.getObjectAt(where);
             
-            if(nextAnimal instanceof Antelope) {
+            if(nextAnimal instanceof Buffalo) {
                 Buffalo buffalo = (Buffalo) animal;
                 Buffalo nextBuffalo = (Buffalo) nextAnimal;
                 if(buffalo.getSex() != nextBuffalo.getSex()) {
