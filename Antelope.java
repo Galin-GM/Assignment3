@@ -80,7 +80,7 @@ public class Antelope extends Animal
     }
     
     /**
-     * Check whether or not this Antelopes is to give birth at this step.
+     * Check whether or not this antelopes is to give birth at this step.
      * New births will be made into free adjacent locations.
      * @param newAntelopes A list to return newly born antelopes.
      */

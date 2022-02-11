@@ -4,14 +4,14 @@ import java.util.Random;
 
 /**
  * A simple model of a lion.
- * liones age, move, eat rabbits, and die.
+ * Lions age, move, eat antelopes and buffalos, and die.
  * 
  * @author David J. Barnes and Michael Kölling
  * @version 2016.02.29 (2)
  */
 public class Lion extends Animal
 {
-    // Characteristics shared by all liones (class variables).
+    // Characteristics shared by all lions (class variables).
     
     // The age at which a lion can start to breed.
     private static final int BREEDING_AGE = 15;
@@ -21,17 +21,18 @@ public class Lion extends Animal
     private static final double BREEDING_PROBABILITY = 0.08;
     // The maximum number of births.
     private static final int MAX_LITTER_SIZE = 2;
-    // The food value of a single rabbit. In effect, this is the
+    // The food value of a single antelope/buffalo. In effect, this is the
     // number of steps a lion can go before it has to eat again.
     private static final int ANTELOPE_FOOD_VALUE = 9;
     private static final int BUFFALO_FOOD_VALUE = 9;
+
     // A shared random number generator to control breeding.
     private static final Random rand = Randomizer.getRandom();
     
     // Individual characteristics (instance fields).
     // The lion's age.
     private int age;
-    // The lion's food level, which is increased by eating rabbits.
+    // The lion's food level, which is increased by eating antelopes/buffalos.
     private int foodLevel;
 
     /**
@@ -57,10 +58,10 @@ public class Lion extends Animal
     
     /**
      * This is what the lion does most of the time: it hunts for
-     * rabbits. In the process, it might breed, die of hunger,
+     * antelopes and buffalo. In the process, it might breed, die of hunger,
      * or die of old age.
      * @param field The field currently occupied.
-     * @param newliones A list to return newly born liones.
+     * @param newLions A list to return newly born lions.
      */
     public void act(List<Animal> newLions)
     {
@@ -108,8 +109,8 @@ public class Lion extends Animal
     }
     
     /**
-     * Look for rabbits adjacent to the current location.
-     * Only the first live rabbit is eaten.
+     * Look for antelopes/buffalos adjacent to the current location.
+     * Only the first live antelope/buffalo is eaten.
      * @return Where food was found, or null if it wasn't.
      */
     private Location findFood()
@@ -120,7 +121,7 @@ public class Lion extends Animal
         while(it.hasNext()) {
             Location where = it.next();
             Object animal = field.getObjectAt(where);
-            if(animal instanceof Antelope) {
+            if(animal instanceof Antelope){
                 Antelope antelope = (Antelope) animal;
                 if(antelope.isAlive()) { 
                     antelope.setDead();
@@ -141,13 +142,13 @@ public class Lion extends Animal
     }
     
     /**
-     * Check whether or not this lion is to give birth at this step.
+     * Check whether or not this tiger is to give birth at this step.
      * New births will be made into free adjacent locations.
-     * @param newliones A list to return newly born liones.
+     * @param newTigers A list to return newly born tigers.
      */
     private void giveBirth(List<Animal> newLions)
     {
-        // New liones are born into adjacent locations.
+        // New lions are born into adjacent locations.
         // Get a list of adjacent free locations.
         Field field = getField();
         List<Location> free = field.getFreeAdjacentLocations(getLocation());
@@ -174,7 +175,7 @@ public class Lion extends Animal
     }
 
     /**
-     * A lion can breed if it has reached the breeding age.
+     * A tiger can breed if it has reached the breeding age.
      */
     private boolean canBreed()
     {

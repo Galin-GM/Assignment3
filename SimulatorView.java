@@ -24,7 +24,7 @@ public class SimulatorView extends JFrame
 
     private final String STEP_PREFIX = "Step: ";
     private final String TIME_OF_DAY_PREFIX = "Time Of Day: ";
-    private final String POPULATION_PREFIX = "Population: ";
+    private final String POPULATION_PREFIX = "Population:   ";
     private JLabel stepLabel, population, infoLabel, timeOfDayLabel;
     private FieldView fieldView;
     

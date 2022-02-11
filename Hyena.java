@@ -3,41 +3,41 @@ import java.util.Iterator;
 import java.util.Random;
 
 /**
- * A simple model of a lion.
- * liones age, move, eat rabbits, and die.
+ * A simple model of a hyena.
+ * hyena age, move, eat rabbits, and die.
  * 
  * @author David J. Barnes and Michael Kölling
  * @version 2016.02.29 (2)
  */
 public class Hyena extends Animal
 {
-    // Characteristics shared by all liones (class variables).
+    // Characteristics shared by all hyena (class variables).
     
-    // The age at which a lion can start to breed.
+    // The age at which a hyena can start to breed.
     private static final int BREEDING_AGE = 15;
-    // The age to which a lion can live.
+    // The age to which a hyena can live.
     private static final int MAX_AGE = 150;
-    // The likelihood of a lion breeding.
+    // The likelihood of a hyena breeding.
     private static final double BREEDING_PROBABILITY = 0.08;
     // The maximum number of births.
     private static final int MAX_LITTER_SIZE = 2;
     // The food value of a single rabbit. In effect, this is the
-    // number of steps a lion can go before it has to eat again.
+    // number of steps a hyena can go before it has to eat again.
     private static final int ANTELOPE_FOOD_VALUE = 9;
     // A shared random number generator to control breeding.
     private static final Random rand = Randomizer.getRandom();
     
     // Individual characteristics (instance fields).
-    // The lion's age.
+    // The hyena's age.
     private int age;
-    // The lion's food level, which is increased by eating rabbits.
+    // The hyena's food level, which is increased by eating rabbits.
     private int foodLevel;
 
     /**
-     * Create a lion. A lion can be created as a new born (age zero
+     * Create a hyena. A hyena can be created as a new born (age zero
      * and not hungry) or with a random age and food level.
      * 
-     * @param randomAge If true, the lion will have random age and hunger level.
+     * @param randomAge If true, the hyena will have random age and hunger level.
      * @param field The field currently occupied.
      * @param location The location within the field.
      */
@@ -55,11 +55,11 @@ public class Hyena extends Animal
     }
     
     /**
-     * This is what the lion does most of the time: it hunts for
+     * This is what the hyena does most of the time: it hunts for
      * rabbits. In the process, it might breed, die of hunger,
      * or die of old age.
      * @param field The field currently occupied.
-     * @param newliones A list to return newly born liones.
+     * @param newHyenas A list to return newly born hyena.
      */
     public void act(List<Animal> newHyenas)
     {
@@ -85,7 +85,7 @@ public class Hyena extends Animal
     }
 
     /**
-     * Increase the age. This could result in the lion's death.
+     * Increase the age. This could result in the hyena's death.
      */
     private void incrementAge()
     {
@@ -96,7 +96,7 @@ public class Hyena extends Animal
     }
     
     /**
-     * Make this lion more hungry. This could result in the lion's death.
+     * Make this hyena more hungry. This could result in the hyena's death.
      */
     private void incrementHunger()
     {
@@ -132,9 +132,9 @@ public class Hyena extends Animal
     }
     
     /**
-     * Check whether or not this lion is to give birth at this step.
+     * Check whether or not this hyena is to give birth at this step.
      * New births will be made into free adjacent locations.
-     * @param newliones A list to return newly born liones.
+     * @param newHyenas A list to return newly born hyena.
      */
     private void giveBirth(List<Animal> newHyenas)
     {
@@ -165,7 +165,7 @@ public class Hyena extends Animal
     }
 
     /**
-     * A lion can breed if it has reached the breeding age.
+     * A hyena can breed if it has reached the breeding age.
      */
     private boolean canBreed()
     {

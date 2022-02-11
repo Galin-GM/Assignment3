@@ -14,8 +14,10 @@ public abstract class Animal
     private Field field;
     // The animal's position in the field.
     private Location location;
-    
+    // Whether the animal is nocturnal or not.
     private boolean isNocturnal;
+    // The gender of the animal.
+    private char sex;
     
     /**
      * Create a new animal at location in field.
@@ -31,6 +33,24 @@ public abstract class Animal
         setLocation(location);
     }
     
+    /**
+     * Check whether this animal is a male or female.
+     * @ return 'f' is this animal is a female and 'm' if this animal is a male.
+     */
+    protected char getSex() 
+    {
+        return sex;
+    }
+    
+    // protected char setSex()
+    // {
+        
+    // }
+    
+    /**
+     * Check whether this animal is nocturnal or not.
+     * @ return true if the animal is nocturnal.
+     */
     protected boolean getIsNocturnal() {
         return isNocturnal;
     }

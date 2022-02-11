@@ -7,7 +7,7 @@ import java.awt.Color;
 
 /**
  * A simple predator-prey simulator, based on a rectangular field
- * containing rabbits and foxes.
+ * containing Lions, Tigers, Hyenas, Antelopes and Buffalos.
  * 
  * @author David J. Barnes and Michael Kölling
  * @version 2016.02.29 (2)
@@ -15,21 +15,22 @@ import java.awt.Color;
 public class Simulator
 {
     // Constants representing configuration information for the simulation.
+    
     // The default width for the grid.
     private static final int DEFAULT_WIDTH = 120;
     // The default depth of the grid.
     private static final int DEFAULT_DEPTH = 80;
-    // The probability that a fox will be created in any given grid position.
-    private static final double LION_CREATION_PROBABILITY = 0.02;
-
-    // The probability that a antelope will be created in any given grid position.
-    private static final double ANTELOPE_CREATION_PROBABILITY = 0.08;
-    // The probability that a buffalo will be created in any given grid position.
-    private static final double BUFFALO_CREATION_PROBABILITY = 0.08; 
-
-    private static final double TIGER_CREATION_PROBABILITY = 0.08;
     
-    private static final double HYENA_CREATION_PROBABILITY = 0.08;
+    // The probability that a lion will be created in any given grid position.
+    private static final double LION_CREATION_PROBABILITY = 0.02;
+    // The probability that a antelope will be created in any given grid position.
+    private static final double ANTELOPE_CREATION_PROBABILITY = 0.03;
+    // The probability that a buffalo will be created in any given grid position.
+    private static final double BUFFALO_CREATION_PROBABILITY = 0.02; 
+    // The probability that a tiger will be created in any given grid position.
+    private static final double TIGER_CREATION_PROBABILITY = 0.02;
+    // The probability that a hyena will be created in any given grid position.
+    private static final double HYENA_CREATION_PROBABILITY = 0.04;
 
 
     // List of animals in the field.
@@ -40,10 +41,7 @@ public class Simulator
     private int step;
     // A graphical view of the simulation.
     private SimulatorView view;
-    
-
-    private int x;
-
+    // A tracker for the time of day.
     private TimeOfDay timeTracker;
     
 
@@ -76,14 +74,15 @@ public class Simulator
 
         // Create a view of the state of each location in the field.
         view = new SimulatorView(depth, width);
+        
+        // Set prey colours.
         view.setColor(Antelope.class, Color.ORANGE);
-        view.setColor(Lion.class, Color.BLUE);
-
         view.setColor(Buffalo.class, Color.BLACK);
 
+        // Set predator colours
+        view.setColor(Lion.class, Color.BLUE);
         view.setColor(Tiger.class, Color.RED);
-        
-        view.setColor(Hyena.class, Color.PINK);
+        view.setColor(Hyena.class, Color.gray);
 
         
         // Setup a valid starting point.
@@ -120,7 +119,6 @@ public class Simulator
     public void simulateOneStep()
     {
         step++;
-        
         trackTime();
 
         // Provide space for newborn animals.

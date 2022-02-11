@@ -1,17 +1,18 @@
 
 /**
- * Write a description of class TimeOfDay here.
+ * A class for tracking the time of day.
+ * It can either be day or night.
  *
- * @author (your name)
- * @version (a version number or a date)
+ * @author Galin Mihaylov and Ricky Brown
  */
 public class TimeOfDay
 {
-    // instance variables - replace the example below with your own
+    // Whether it is daytime in the simulation.
     private boolean isDay;
 
     /**
-     * Constructor for objects of class TimeOfDay
+     * Start the simulation at daytime.
+     * If simulation is wanted to be started at night-time, change to false.
      */
     public TimeOfDay()
     {
@@ -19,16 +20,20 @@ public class TimeOfDay
     }
 
     /**
-     * An example of a method - replace this comment with your own
+     * Check whether it is daytime or night-time 
      *
-     * @param  y  a sample parameter for a method
-     * @return    the sum of x and y
+     * @return true if it is daytime, false if it is night-time.
      */
     public boolean isItDay()
     {
         return isDay;
     }
     
+    /**
+     * Return whether is it day or night, in String form.
+     * Used to display whether it is day or night in the SimulatorView.
+     * @return Whether it is day or night, in String form.
+     */
     public String dayOrNight()
     {
         if (isDay) {
@@ -39,6 +44,11 @@ public class TimeOfDay
         }
     }
     
+    /**
+     * Change the time of day.
+     * If it is daytime flip to night-time.
+     * If it is night-time flip to daytime.
+     */
     public void flipTime() {
         isDay = !isDay;
     }

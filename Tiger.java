@@ -3,26 +3,26 @@ import java.util.Iterator;
 import java.util.Random;
 
 /**
- * A simple model of a lion.
- * liones age, move, eat rabbits, and die.
+ * A simple model of a tiger.
+ * tigers age, move, eat antelopes and buffalos, and die.
  * 
  * @author David J. Barnes and Michael Kölling
  * @version 2016.02.29 (2)
  */
 public class Tiger extends Animal
 {
-    // Characteristics shared by all liones (class variables).
+    // Characteristics shared by all tigers (class variables).
     
-    // The age at which a lion can start to breed.
+    // The age at which a tiger can start to breed.
     private static final int BREEDING_AGE = 15;
-    // The age to which a lion can live.
+    // The age to which a tiger can live.
     private static final int MAX_AGE = 150;
-    // The likelihood of a lion breeding.
+    // The likelihood of a tiger breeding.
     private static final double BREEDING_PROBABILITY = 0.08;
     // The maximum number of births.
     private static final int MAX_LITTER_SIZE = 2;
-    // The food value of a single rabbit. In effect, this is the
-    // number of steps a lion can go before it has to eat again.
+    // The food value of a single antelope/buffalo. In effect, this is the
+    // number of steps a tiger can go before it has to eat again.
     private static final int ANTELOPE_FOOD_VALUE = 9;
     private static final int BUFFALO_FOOD_VALUE = 9;
 
@@ -30,16 +30,16 @@ public class Tiger extends Animal
     private static final Random rand = Randomizer.getRandom();
     
     // Individual characteristics (instance fields).
-    // The lion's age.
+    // The tiger's age.
     private int age;
-    // The lion's food level, which is increased by eating rabbits.
+    // The tiger's food level, which is increased by eating antelopes/buffalos.
     private int foodLevel;
 
     /**
-     * Create a tiger. A lion can be created as a new born (age zero
+     * Create a tiger. A tiger can be created as a new born (age zero
      * and not hungry) or with a random age and food level.
      * 
-     * @param randomAge If true, the lion will have random age and hunger level.
+     * @param randomAge If true, the tiger will have random age and hunger level.
      * @param field The field currently occupied.
      * @param location The location within the field.
      */
@@ -57,11 +57,11 @@ public class Tiger extends Animal
     }
     
     /**
-     * This is what the lion does most of the time: it hunts for
-     * rabbits. In the process, it might breed, die of hunger,
+     * This is what the tiger does most of the time: it hunts for
+     * antelopes and buffalo. In the process, it might breed, die of hunger,
      * or die of old age.
      * @param field The field currently occupied.
-     * @param newliones A list to return newly born liones.
+     * @param newTigers A list to return newly born tigers.
      */
     public void act(List<Animal> newTigers)
     {
@@ -87,7 +87,7 @@ public class Tiger extends Animal
     }
 
     /**
-     * Increase the age. This could result in the lion's death.
+     * Increase the age. This could result in the tigers's death.
      */
     private void incrementAge()
     {
@@ -98,7 +98,7 @@ public class Tiger extends Animal
     }
     
     /**
-     * Make this lion more hungry. This could result in the lion's death.
+     * Make this tiger more hungry. This could result in the tiger's death.
      */
     private void incrementHunger()
     {
@@ -109,8 +109,8 @@ public class Tiger extends Animal
     }
     
     /**
-     * Look for rabbits adjacent to the current location.
-     * Only the first live rabbit is eaten.
+     * Look for antelopes/buffalos adjacent to the current location.
+     * Only the first live antelope/buffalo is eaten.
      * @return Where food was found, or null if it wasn't.
      */
     private Location findFood()
@@ -142,13 +142,13 @@ public class Tiger extends Animal
     }
     
     /**
-     * Check whether or not this lion is to give birth at this step.
+     * Check whether or not this tiger is to give birth at this step.
      * New births will be made into free adjacent locations.
-     * @param newliones A list to return newly born liones.
+     * @param newTigers A list to return newly born tigers.
      */
     private void giveBirth(List<Animal> newTigers)
     {
-        // New liones are born into adjacent locations.
+        // New tigers are born into adjacent locations.
         // Get a list of adjacent free locations.
         Field field = getField();
         List<Location> free = field.getFreeAdjacentLocations(getLocation());
@@ -175,7 +175,7 @@ public class Tiger extends Animal
     }
 
     /**
-     * A lion can breed if it has reached the breeding age.
+     * A tiger can breed if it has reached the breeding age.
      */
     private boolean canBreed()
     {
