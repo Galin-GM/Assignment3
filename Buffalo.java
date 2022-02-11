@@ -1,5 +1,6 @@
 import java.util.List;
 import java.util.Random;
+import java.util.Iterator;
 
 /**
  * A simple model of a buffalo.
@@ -91,11 +92,26 @@ public class Buffalo extends Animal
         Field field = getField();
         List<Location> free = field.getFreeAdjacentLocations(getLocation());
         int births = breed();
-        for(int b = 0; b < births && free.size() > 0; b++) {
-            Location loc = free.remove(0);
-            Buffalo young = new Buffalo(false, field, loc, false);
-            newBuffalos.add(young);
-        }
+        List<Location> adjacent = field.adjacentLocations(getLocation());
+        Iterator<Location> it = adjacent.iterator();
+        
+        while(it.hasNext()) {
+            Object animal = field.getObjectAt(getLocation());
+            Location where = it.next();
+            Object nextAnimal = field.getObjectAt(where);
+            
+            if(nextAnimal instanceof Antelope) {
+                Buffalo buffalo = (Buffalo) animal;
+                Buffalo nextBuffalo = (Buffalo) nextAnimal;
+                if(buffalo.getSex() != nextBuffalo.getSex()) {
+                    for(int b = 0; b < births && free.size() > 0; b++) {
+                        Location loc = free.remove(0);
+                        Buffalo young = new Buffalo(false, field, loc, false);
+                        newBuffalos.add(young);
+                    }   
+                }
+            }
+        } 
     }
         
     /**

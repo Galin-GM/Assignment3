@@ -143,11 +143,26 @@ public class Hyena extends Animal
         Field field = getField();
         List<Location> free = field.getFreeAdjacentLocations(getLocation());
         int births = breed();
-        for(int b = 0; b < births && free.size() > 0; b++) {
-            Location loc = free.remove(0);
-            Hyena young = new Hyena(false, field, loc, true);
-            newHyenas.add(young);
-        }
+        List<Location> adjacent = field.adjacentLocations(getLocation());
+        Iterator<Location> it = adjacent.iterator();
+        
+        while(it.hasNext()) {
+            Object animal = field.getObjectAt(getLocation());
+            Location where = it.next();
+            Object nextAnimal = field.getObjectAt(where);
+            
+            if(nextAnimal instanceof Antelope) {
+                Hyena hyena = (Hyena) animal;
+                Hyena nextHyena = (Hyena) nextAnimal;
+                if(hyena.getSex() != nextHyena.getSex()) {
+                    for(int b = 0; b < births && free.size() > 0; b++) {
+                        Location loc = free.remove(0);
+                        Hyena young = new Hyena(false, field, loc, false);
+                        newHyenas.add(young);
+                    }   
+                }
+            }
+        } 
     }
         
     /**

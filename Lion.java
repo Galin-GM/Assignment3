@@ -153,11 +153,26 @@ public class Lion extends Animal
         Field field = getField();
         List<Location> free = field.getFreeAdjacentLocations(getLocation());
         int births = breed();
-        for(int b = 0; b < births && free.size() > 0; b++) {
-            Location loc = free.remove(0);
-            Lion young = new Lion(false, field, loc, false);
-            newLions.add(young);
-        }
+        List<Location> adjacent = field.adjacentLocations(getLocation());
+        Iterator<Location> it = adjacent.iterator();
+        
+        while(it.hasNext()) {
+            Object animal = field.getObjectAt(getLocation());
+            Location where = it.next();
+            Object nextAnimal = field.getObjectAt(where);
+            
+            if(nextAnimal instanceof Antelope) {
+                Lion lion = (Lion) animal;
+                Lion nextLion = (Lion) nextAnimal;
+                if(lion.getSex() != nextLion.getSex()) {
+                    for(int b = 0; b < births && free.size() > 0; b++) {
+                        Location loc = free.remove(0);
+                        Lion young = new Lion(false, field, loc, false);
+                        newLions.add(young);
+                    }   
+                }
+            }
+        } 
     }
         
     /**

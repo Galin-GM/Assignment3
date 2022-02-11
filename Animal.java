@@ -1,4 +1,5 @@
 import java.util.List;
+import java.util.Random;
 
 /**
  * A class representing shared characteristics of animals.
@@ -16,7 +17,7 @@ public abstract class Animal
     private Location location;
     // Whether the animal is nocturnal or not.
     private boolean isNocturnal;
-    // The gender of the animal.
+    // The sex of the animal.
     private char sex;
     
     /**
@@ -28,6 +29,7 @@ public abstract class Animal
     public Animal(Field field, Location location, boolean isNocturnal)
     {
         alive = true;
+        this.sex = generateSex();
         this.isNocturnal = isNocturnal;
         this.field = field;
         setLocation(location);
@@ -42,10 +44,19 @@ public abstract class Animal
         return sex;
     }
     
-    // protected char setSex()
-    // {
-        
-    // }
+    protected char generateSex()
+    {
+        Random rand = Randomizer.getRandom();
+        char sex = ' ';
+        double probability = 0.5;
+        if(rand.nextDouble() <= probability) {
+            sex = 'f';
+        }
+        else {
+            sex = 'm';
+        }
+        return sex;
+    }
     
     /**
      * Check whether this animal is nocturnal or not.

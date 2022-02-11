@@ -1,5 +1,6 @@
 import java.util.List;
 import java.util.Random;
+import java.util.Iterator;
 
 /**
  * A simple model of a antelope.
@@ -90,12 +91,28 @@ public class Antelope extends Animal
         // Get a list of adjacent free locations.
         Field field = getField();
         List<Location> free = field.getFreeAdjacentLocations(getLocation());
+        // Get a list of adjacent locations.
+        List<Location> adjacent = field.adjacentLocations(getLocation());
+        Iterator<Location> it = adjacent.iterator();
         int births = breed();
-        for(int b = 0; b < births && free.size() > 0; b++) {
-            Location loc = free.remove(0);
-            Antelope young = new Antelope(false, field, loc, false);
-            newAntelopes.add(young);
-        }
+        
+        while(it.hasNext()) {
+            Object animal = field.getObjectAt(getLocation());
+            Location where = it.next();
+            Object nextAnimal = field.getObjectAt(where);
+            
+            if(nextAnimal instanceof Antelope) {
+                Antelope antelope = (Antelope) animal;
+                Antelope nextAntelope = (Antelope) nextAnimal;
+                if(antelope.getSex() != nextAntelope.getSex()) {
+                    for(int b = 0; b < births && free.size() > 0; b++) {
+                        Location loc = free.remove(0);
+                        Antelope young = new Antelope(false, field, loc, false);
+                        newAntelopes.add(young);
+                    }   
+                }
+            }
+        }  
     }
         
     /**
