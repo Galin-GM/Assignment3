@@ -63,7 +63,7 @@ public class Tiger extends Animal
      * @param field The field currently occupied.
      * @param newTigers A list to return newly born tigers.
      */
-    public void act(List<Animal> newTigers)
+    public void act(List<Species> newTigers)
     {
         incrementAge();
         incrementHunger();
@@ -146,7 +146,7 @@ public class Tiger extends Animal
      * New births will be made into free adjacent locations.
      * @param newTigers A list to return newly born tigers.
      */
-    private void giveBirth(List<Animal> newTigers)
+    private void giveBirth(List<Species> newTigers)
     {
         // New tigers are born into adjacent locations.
         // Get a list of adjacent free locations.

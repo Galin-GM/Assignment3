@@ -51,7 +51,7 @@ public class Buffalo extends Animal
      * around. Sometimes it will breed or die of old age.
      * @param newBuffalos A list to return newly born buffalos.
      */
-    public void act(List<Animal> newBuffalos)
+    public void act(List<Species> newBuffalos)
     {
         incrementAge();
         if(isAlive()) {
@@ -85,7 +85,7 @@ public class Buffalo extends Animal
      * New births will be made into free adjacent locations.
      * @param newBuffalo A list to return newly born buffalo.
      */
-    private void giveBirth(List<Animal> newBuffalos)
+    private void giveBirth(List<Species> newBuffalos)
     {
         // New Antelopes are born into adjacent locations.
         // Get a list of adjacent free locations.

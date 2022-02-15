@@ -31,10 +31,12 @@ public class Simulator
     private static final double TIGER_CREATION_PROBABILITY = 0.02;
     // The probability that a hyena will be created in any given grid position.
     private static final double HYENA_CREATION_PROBABILITY = 0.04;
+    
+    private static final double SHRUB_CREATION_PROBABILITY = 0.02;
 
 
     // List of animals in the field.
-    private List<Animal> animals;
+    private List<Species> animals;
     // The current state of the field.
     private Field field;
     // The current step of the simulation.
@@ -83,6 +85,8 @@ public class Simulator
         view.setColor(Lion.class, Color.BLUE);
         view.setColor(Tiger.class, Color.RED);
         view.setColor(Hyena.class, Color.gray);
+        
+        view.setColor(Shrub.class, Color.GREEN);
 
         
         // Setup a valid starting point.
@@ -122,10 +126,11 @@ public class Simulator
         trackTime();
 
         // Provide space for newborn animals.
-        List<Animal> newAnimals = new ArrayList<>();        
+        List<Species> newAnimals = new ArrayList<>();        
         // Let all rabbits act.
-        for(Iterator<Animal> it = animals.iterator(); it.hasNext(); ) {
-            Animal animal = it.next();
+        for(Iterator<Species> it = animals.iterator(); it.hasNext(); ) {
+            
+            Species animal = it.next();
             if(!animal.getIsNocturnal() & timeTracker.isItDay()) {
                 animal.act(newAnimals);
             }
@@ -192,7 +197,12 @@ public class Simulator
                     // Location location = new Location(row, col);
                     // Hyena hyena = new Hyena(true, field, location, true);
                     // animals.add(hyena);
-
+                
+                else if(rand.nextDouble() <= SHRUB_CREATION_PROBABILITY) {
+                    Location location = new Location(row, col);
+                    Shrub shrub = new Shrub(field, location, false);
+                    animals.add(shrub);
+                }
                 // }
                 // else leave the location empty.
             }

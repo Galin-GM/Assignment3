@@ -51,7 +51,7 @@ public class Antelope extends Animal
      * around. Sometimes it will breed or die of old age.
      * @param newAntelopes A list to return newly born Antelopes.
      */
-    public void act(List<Animal> newAntelopes)
+    public void act(List<Species> newAntelopes)
     {
         incrementAge();
         if(isAlive()) {
@@ -85,7 +85,7 @@ public class Antelope extends Animal
      * New births will be made into free adjacent locations.
      * @param newAntelopes A list to return newly born antelopes.
      */
-    private void giveBirth(List<Animal> newAntelopes)
+    private void giveBirth(List<Species> newAntelopes)
     {
         // New Antelopes are born into adjacent locations.
         // Get a list of adjacent free locations.
