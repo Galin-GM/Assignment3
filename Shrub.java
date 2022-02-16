@@ -49,8 +49,8 @@ public class Shrub extends Plant
         Iterator<Location> it = free.iterator();
         int growths = growth();
         
-        while(it.hasNext()) {
-            for(int b = 0; b < growths && free.size() > 0; b++) {
+        while(it.hasNext() && age > SPAWNING_AGE) {
+            for(int b = 0; b <= growths && free.size() > 0; b++) {
                 Location loc = free.remove(0);
                 Shrub youngShrub = new Shrub(field, loc, false);
                 newShrub.add(youngShrub);
@@ -61,7 +61,7 @@ public class Shrub extends Plant
     public int growth()
     {
         int births = 0;
-        if(age > SPAWNING_AGE) //&& rand.nextDouble() <= NEW_SHRUB_PROBABILITY) 
+        if(rand.nextDouble() <= NEW_SHRUB_PROBABILITY) 
         {
              births = MAX_LITTER_SIZE;
         }
