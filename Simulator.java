@@ -45,6 +45,8 @@ public class Simulator
     private SimulatorView view;
     // A tracker for the time of day.
     private TimeOfDay timeTracker;
+    // A tracker for the weather.
+    private Weather weatherTracker;
     
 
     
@@ -73,7 +75,8 @@ public class Simulator
         animals = new ArrayList<>();
         field = new Field(depth, width);
         timeTracker = new TimeOfDay();
-
+        weatherTracker = new Weather();
+        
         // Create a view of the state of each location in the field.
         view = new SimulatorView(depth, width);
         
@@ -146,7 +149,7 @@ public class Simulator
         // Add the newly born foxes and rabbits to the main lists.
         animals.addAll(newAnimals);
 
-        view.showStatus(step, field, timeTracker.dayOrNight());
+        view.showStatus(step, field, timeTracker.dayOrNight(), weatherTracker.getCurrentWeather());
     }
         
     /**
@@ -159,7 +162,7 @@ public class Simulator
         populate();
         
         // Show the starting state in the view.
-        view.showStatus(step, field, timeTracker.dayOrNight());
+        view.showStatus(step, field, timeTracker.dayOrNight(), weatherTracker.getCurrentWeather());
     }
     
     /**
@@ -212,6 +215,7 @@ public class Simulator
     private void trackTime() {
         if (step % 24 == 0) {
             timeTracker.flipTime();
+            weatherTracker.setRandomWeather();
         }
     }
     

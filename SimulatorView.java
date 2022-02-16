@@ -24,8 +24,9 @@ public class SimulatorView extends JFrame
 
     private final String STEP_PREFIX = "Step: ";
     private final String TIME_OF_DAY_PREFIX = "Time Of Day: ";
+    private final String WEATHER_PREFIX = "Weather: ";
     private final String POPULATION_PREFIX = "Population:   ";
-    private JLabel stepLabel, population, infoLabel, timeOfDayLabel;
+    private JLabel stepLabel, population, infoLabel, timeOfDayLabel, weatherLabel;
     private FieldView fieldView;
     
     // A map for storing colors for participants in the simulation
@@ -46,7 +47,8 @@ public class SimulatorView extends JFrame
         setTitle("Predator and Prey Simulation");
         stepLabel = new JLabel(STEP_PREFIX, JLabel.CENTER);
         timeOfDayLabel = new JLabel(TIME_OF_DAY_PREFIX, JLabel.CENTER);
-        infoLabel = new JLabel("  ", JLabel.CENTER);
+        weatherLabel = new JLabel(WEATHER_PREFIX, JLabel.CENTER);
+        //infoLabel = new JLabel("  ", JLabel.CENTER);
         population = new JLabel(POPULATION_PREFIX, JLabel.CENTER);
         
         setLocation(100, 50);
@@ -58,7 +60,8 @@ public class SimulatorView extends JFrame
         JPanel infoPane = new JPanel(new BorderLayout());
             infoPane.add(stepLabel, BorderLayout.WEST);
             infoPane.add(timeOfDayLabel, BorderLayout.EAST);
-            infoPane.add(infoLabel, BorderLayout.CENTER);
+            infoPane.add(weatherLabel, BorderLayout.CENTER);
+            //infoPane.add(infoLabel, BorderLayout.CENTER);
         contents.add(infoPane, BorderLayout.NORTH);
         contents.add(fieldView, BorderLayout.CENTER);
         contents.add(population, BorderLayout.SOUTH);
@@ -104,7 +107,7 @@ public class SimulatorView extends JFrame
      * @param step Which iteration step it is.
      * @param field The field whose status is to be displayed.
      */
-    public void showStatus(int step, Field field, String dayOrNight)
+    public void showStatus(int step, Field field, String dayOrNight, String currentWeather)
     {
         if(!isVisible()) {
             setVisible(true);
@@ -112,6 +115,7 @@ public class SimulatorView extends JFrame
             
         stepLabel.setText(STEP_PREFIX + step);
         timeOfDayLabel.setText(TIME_OF_DAY_PREFIX + dayOrNight);
+        weatherLabel.setText(TIME_OF_DAY_PREFIX + currentWeather);
         stats.reset();
         
         fieldView.preparePaint();
@@ -131,7 +135,6 @@ public class SimulatorView extends JFrame
         stats.countFinished();
 
         population.setText(POPULATION_PREFIX + stats.getPopulationDetails(field));
-        //timeOfDay.setText(TIME_OF_DAY_PREFIX + dayOrNight);
         fieldView.repaint();
     }
 
