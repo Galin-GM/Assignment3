@@ -16,13 +16,19 @@ public class Buffalo extends Animal
     // The age at which a buffalo can start to breed.
     private static final int BREEDING_AGE = 5;
     // The age to which a buffalo can live.
-    private static final int MAX_AGE = 40;
+    private static final int MAX_AGE = 80;
     // The likelihood of a buffalo breeding.
     private static final double BREEDING_PROBABILITY = 0.05;
     // The maximum number of births.
-    private static final int MAX_LITTER_SIZE = 2;
+    private static final int MAX_LITTER_SIZE = 3;
     // A shared random number generator to control breeding.
     private static final Random rand = Randomizer.getRandom();
+    
+    // Initial plant food value
+    private static final int PLANT_FOOD_VALUE = 10;
+    
+    // Initial antelope food level.
+    private int foodLevel = 20;
     
     // Individual characteristics (instance fields).
     
@@ -54,10 +60,17 @@ public class Buffalo extends Animal
     public void act(List<Species> newBuffalos)
     {
         incrementAge();
+        incrementHunger();
         if(isAlive()) {
-            giveBirth(newBuffalos);            
-            // Try to move into a free location.
-            Location newLocation = getField().freeAdjacentLocation(getLocation());
+            giveBirth(newBuffalos); 
+            
+            // Try to find food.
+            Location newLocation = findFood();
+            
+            if (newLocation == null) {
+                // If you cannot find food, try to move into a free location.
+                newLocation = getField().freeAdjacentLocation(getLocation());
+            }
             if(newLocation != null) {
                 setLocation(newLocation);
             }
@@ -135,5 +148,33 @@ public class Buffalo extends Animal
     private boolean canBreed()
     {
         return age >= BREEDING_AGE;
+    }
+    
+    private Location findFood()
+    {
+        Field field = getField();
+        List<Location> adjacent = field.adjacentLocations(getLocation());
+        Iterator<Location> it = adjacent.iterator();
+        while(it.hasNext()) {
+            Location where = it.next();
+            Object plants = field.getObjectAt(where);
+            if(plants instanceof Shrub) {
+                Shrub shrub = (Shrub) plants;
+                if(shrub.isAlive()) { 
+                    shrub.setDead();
+                    foodLevel = PLANT_FOOD_VALUE;
+                    return where;
+                }
+            }
+        }
+        return null;
+    }
+    
+    private void incrementHunger()
+    {
+        foodLevel--;
+        if(foodLevel <= 0) {
+            setDead();
+        }
     }
 }

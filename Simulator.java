@@ -32,7 +32,7 @@ public class Simulator
     // The probability that a hyena will be created in any given grid position.
     private static final double HYENA_CREATION_PROBABILITY = 0.04;
     
-    private static final double SHRUB_CREATION_PROBABILITY = 0.02;
+    private static final double SHRUB_CREATION_PROBABILITY = 0.10;
 
 
     // List of animals in the field.
@@ -214,6 +214,7 @@ public class Simulator
             timeTracker.flipTime();
         }
     }
+    
     
     /**
      * Pause for a given time.

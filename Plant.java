@@ -8,7 +8,7 @@
 public abstract class Plant extends Species
 {
     // instance variables - replace the example below with your own
-    private int age;
+    //private int age;
     
     
 
@@ -18,7 +18,7 @@ public abstract class Plant extends Species
     public Plant(Field field, Location location, boolean isNocturnal)
     {
         super(field, location, isNocturnal);
-        age = 0;
+        
     }
 
     /**
