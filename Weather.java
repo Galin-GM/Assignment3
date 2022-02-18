@@ -56,13 +56,7 @@ public class Weather
             currentWeather = nightTypesOfWeather.get(rand.nextInt(nightTypesOfWeather.size()));
             flip = !flip;
         }
-        //currentWeather = dayTypesOfWeather.get(rand.nextInt(dayTypesOfWeather.size()));
     }
-    
-    // public void setNightRandomWeather()
-    // {
-        // currentWeather = nightTypesOfWeather.get(rand.nextInt(nightTypesOfWeather.size()));
-    // }
     
     public String getCurrentWeather()
     {

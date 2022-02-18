@@ -38,7 +38,7 @@ public class Simulator
     // The probability that a hyena will be created in any given grid position.
     private static final double HYENA_CREATION_PROBABILITY = 0.04;
     
-    private static final double SHRUB_CREATION_PROBABILITY = 0.1;
+    private static final double SHRUB_CREATION_PROBABILITY = 0.05;
 
 
     // List of animals in the field.
@@ -197,20 +197,19 @@ public class Simulator
                     Buffalo buffalo = new Buffalo(true, field, location, false);
                     animals.add(buffalo);
                 }
-                // else if(rand.nextDouble() <= TIGER_CREATION_PROBABILITY) {
+                // if(rand.nextDouble() <= TIGER_CREATION_PROBABILITY) {
                     // Location location = new Location(row, col);
                     // Tiger tiger = new Tiger(true, field, location, false);
                     // animals.add(tiger);
-
-                // }
+                // } 
                 // else if(rand.nextDouble() <= HYENA_CREATION_PROBABILITY) {
                     // Location location = new Location(row, col);
                     // Hyena hyena = new Hyena(true, field, location, true);
                     // animals.add(hyena);
-                
+                // }
                 else if(rand.nextDouble() <= SHRUB_CREATION_PROBABILITY) {
                     Location location = new Location(row, col);
-                    Shrub shrub = new Shrub(field, location, false);
+                    Shrub shrub = new Shrub(true, field, location, false);
                     animals.add(shrub);
                 }
                 // }

@@ -191,6 +191,12 @@ public class Antelope extends Animal
             case "Raining":
                 BREEDING_PROBABILITY = 0.3;
                 break;
+            case "Drought":
+                BREEDING_PROBABILITY = 0.3;
+                break;
+            case "Clear":
+                BREEDING_PROBABILITY = 0.3;
+                break;
             
                 
             default: BREEDING_PROBABILITY = 0.05;

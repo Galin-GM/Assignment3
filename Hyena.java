@@ -18,7 +18,7 @@ public class Hyena extends Animal
     // The age to which a hyena can live.
     private static final int MAX_AGE = 150;
     // The likelihood of a hyena breeding.
-    private static final double BREEDING_PROBABILITY = 0.08;
+    private static double BREEDING_PROBABILITY = 0.08;
     // The maximum number of births.
     private static final int MAX_LITTER_SIZE = 2;
     // The food value of a single rabbit. In effect, this is the
@@ -185,5 +185,27 @@ public class Hyena extends Animal
     private boolean canBreed()
     {
         return age >= BREEDING_AGE;
+    }
+    
+    static public void weatherInfluence(String currentWeather)
+    {
+        String weatherNow = currentWeather;
+        switch(weatherNow) {
+            case "Sunny":
+                BREEDING_PROBABILITY = 0.1;
+                break;
+            case "Raining":
+                BREEDING_PROBABILITY = 0.3;
+                break;
+            case "Drought":
+                BREEDING_PROBABILITY = 0.3;
+                break;
+            case "Clear":
+                BREEDING_PROBABILITY = 0.3;
+                break;
+            
+                
+            default: BREEDING_PROBABILITY = 0.05;
+        }
     }
 }

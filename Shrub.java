@@ -11,48 +11,31 @@ import java.util.Iterator;
 public class Shrub extends Plant
 {
     // instance variables - replace the example below with your own
-    private static final double NEW_SHRUB_PROBABILITY = 0.0001;
+    private static double NEW_SHRUB_PROBABILITY = 0.1;
     private static final Random rand = Randomizer.getRandom();
     private int age;
     private static final int MAX_AGE = 20;
-    private static final int SPAWNING_AGE = 16;
-    private static final int MAX_LITTER_SIZE = 1;
+    private static final int SPAWNING_AGE = 10;
+    private static final int MAX_LITTER_SIZE = 2;
 
     /**
      * Constructor for objects of class Shrub
      */
-    public Shrub(Field field, Location location, boolean isNocturnal)
+    public Shrub(boolean randomAge, Field field, Location location, boolean isNocturnal)
     {
         super(field, location, isNocturnal);
-        age = rand.nextInt(MAX_AGE);;
+        age = 0;
+        if(randomAge) {
+            age = rand.nextInt(MAX_AGE);
+        }
     }
 
-    // public void act(List<Species> newShrub) 
-    // {
-        // incrementAge();
-        // if(isAlive()) {
-            // Location newLocation = getField().freeAdjacentLocation(getLocation());
-            // if(newLocation != null) {
-                // growPlants(newShrub);
-            // }
-            // else {
-                // setDead();
-            // }
-        // }
-    // }
     
     public void act(List<Species> newShrub) 
     {
         incrementAge();
         if(isAlive()) {
             growPlants(newShrub);
-            // newLocation = getField().freeAdjacentLocation(getLocation());
-            // if(newLocation != null) {
-                
-            // }
-            // else {
-                // setDead();
-            // }
         }
     }
     
@@ -64,23 +47,26 @@ public class Shrub extends Plant
         Iterator<Location> it = free.iterator();
         int growths = growth();
         
-        while(it.hasNext() && age > SPAWNING_AGE) {
-            for(int b = 0; b <= growths && free.size() > 0; b++) {
-                Location loc = free.remove(0);
-                Shrub youngShrub = new Shrub(field, loc, false);
-                newShrub.add(youngShrub);
-            }
+           for(int b = 0; b < growths && free.size() > 0; b++) {
+            Location loc = free.remove(0);
+            Shrub youngShrub = new Shrub(true, field, loc, false);
+            newShrub.add(youngShrub);
         }
     }
     
     public int growth()
     {
         int births = 0;
-        if(rand.nextDouble() <= NEW_SHRUB_PROBABILITY) 
+        if(canBreed() && rand.nextDouble() <= NEW_SHRUB_PROBABILITY) 
         {
-             births = MAX_LITTER_SIZE + 1;
+            births = rand.nextInt(MAX_LITTER_SIZE) + 1;
         }
         return births;
+    }
+    
+    private boolean canBreed()
+    {
+        return age >= SPAWNING_AGE;
     }
     
     private void incrementAge()
@@ -88,6 +74,28 @@ public class Shrub extends Plant
         age++;
         if(age > MAX_AGE) {
             setDead();
+        }
+    }
+    
+    static public void weatherInfluence(String currentWeather)
+    {
+        String weatherNow = currentWeather;
+        switch(weatherNow) {
+            case "Sunny":
+                NEW_SHRUB_PROBABILITY = 0.1;
+                break;
+            case "Raining":
+                NEW_SHRUB_PROBABILITY = 0.3;
+                break;
+            case "Drought":
+                NEW_SHRUB_PROBABILITY = 0.3;
+                break;
+            case "Clear":
+                NEW_SHRUB_PROBABILITY = 0.3;
+                break;
+            
+                
+            default: NEW_SHRUB_PROBABILITY = 0.05;
         }
     }
 }   

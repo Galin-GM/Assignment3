@@ -18,7 +18,7 @@ public class Tiger extends Animal
     // The age to which a tiger can live.
     private static final int MAX_AGE = 150;
     // The likelihood of a tiger breeding.
-    private static final double BREEDING_PROBABILITY = 0.5;
+    private static double BREEDING_PROBABILITY = 0.5;
     // The maximum number of births.
     private static final int MAX_LITTER_SIZE = 20;
     // The food value of a single antelope/buffalo. In effect, this is the
@@ -195,5 +195,27 @@ public class Tiger extends Animal
     private boolean canBreed()
     {
         return age >= BREEDING_AGE;
+    }
+    
+    static public void weatherInfluence(String currentWeather)
+    {
+        String weatherNow = currentWeather;
+        switch(weatherNow) {
+            case "Sunny":
+                BREEDING_PROBABILITY = 0.1;
+                break;
+            case "Raining":
+                BREEDING_PROBABILITY = 0.3;
+                break;
+            case "Drought":
+                BREEDING_PROBABILITY = 0.3;
+                break;
+            case "Clear":
+                BREEDING_PROBABILITY = 0.3;
+                break;
+            
+                
+            default: BREEDING_PROBABILITY = 0.05;
+        }
     }
 }
