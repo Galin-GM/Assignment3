@@ -16,15 +16,15 @@ public class Lion extends Animal
     // The age at which a lion can start to breed.
     private static final int BREEDING_AGE = 10;
     // The age to which a lion can live.
-    private static final int MAX_AGE = 150;
+    private static final int MAX_AGE = 100;
     // The likelihood of a lion breeding.
     private static final double BREEDING_PROBABILITY = 0.5;
     // The maximum number of births.
     private static final int MAX_LITTER_SIZE = 1;
     // The food value of a single antelope/buffalo. In effect, this is the
     // number of steps a lion can go before it has to eat again.
-    private static final int ANTELOPE_FOOD_VALUE = 18;
-    private static final int BUFFALO_FOOD_VALUE = 18;
+    private static final int ANTELOPE_FOOD_VALUE = 12;
+    private static final int BUFFALO_FOOD_VALUE = 12;
 
     // A shared random number generator to control breeding.
     private static final Random rand = Randomizer.getRandom();

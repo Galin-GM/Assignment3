@@ -14,8 +14,8 @@ public class Shrub extends Plant
     private static final double NEW_SHRUB_PROBABILITY = 0.0001;
     private static final Random rand = Randomizer.getRandom();
     private int age;
-    private static final int MAX_AGE = 12;
-    private static final int SPAWNING_AGE = 10;
+    private static final int MAX_AGE = 20;
+    private static final int SPAWNING_AGE = 16;
     private static final int MAX_LITTER_SIZE = 1;
 
     /**
@@ -24,20 +24,35 @@ public class Shrub extends Plant
     public Shrub(Field field, Location location, boolean isNocturnal)
     {
         super(field, location, isNocturnal);
-        age = 0;
+        age = rand.nextInt(MAX_AGE);;
     }
 
+    // public void act(List<Species> newShrub) 
+    // {
+        // incrementAge();
+        // if(isAlive()) {
+            // Location newLocation = getField().freeAdjacentLocation(getLocation());
+            // if(newLocation != null) {
+                // growPlants(newShrub);
+            // }
+            // else {
+                // setDead();
+            // }
+        // }
+    // }
+    
     public void act(List<Species> newShrub) 
     {
         incrementAge();
         if(isAlive()) {
-            Location newLocation = getField().freeAdjacentLocation(getLocation());
-            if(newLocation != null) {
-                growPlants(newShrub);
-            }
-            else {
-                setDead();
-            }
+            growPlants(newShrub);
+            // newLocation = getField().freeAdjacentLocation(getLocation());
+            // if(newLocation != null) {
+                
+            // }
+            // else {
+                // setDead();
+            // }
         }
     }
     
@@ -63,7 +78,7 @@ public class Shrub extends Plant
         int births = 0;
         if(rand.nextDouble() <= NEW_SHRUB_PROBABILITY) 
         {
-             births = MAX_LITTER_SIZE;
+             births = MAX_LITTER_SIZE + 1;
         }
         return births;
     }

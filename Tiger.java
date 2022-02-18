@@ -18,13 +18,13 @@ public class Tiger extends Animal
     // The age to which a tiger can live.
     private static final int MAX_AGE = 150;
     // The likelihood of a tiger breeding.
-    private static final double BREEDING_PROBABILITY = 0.4;
+    private static final double BREEDING_PROBABILITY = 0.5;
     // The maximum number of births.
     private static final int MAX_LITTER_SIZE = 20;
     // The food value of a single antelope/buffalo. In effect, this is the
     // number of steps a tiger can go before it has to eat again.
-    private static final int ANTELOPE_FOOD_VALUE = 9;
-    private static final int BUFFALO_FOOD_VALUE = 9;
+    private static final int ANTELOPE_FOOD_VALUE = 15;
+    private static final int BUFFALO_FOOD_VALUE = 15;
 
     // A shared random number generator to control breeding.
     private static final Random rand = Randomizer.getRandom();
