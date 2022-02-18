@@ -24,15 +24,15 @@ public class Simulator
     // The probability that a lion will be created in any given grid position.
     private static final double LION_CREATION_PROBABILITY = 0.01;
     // The probability that a antelope will be created in any given grid position.
-    private static final double ANTELOPE_CREATION_PROBABILITY = 0.02;
+    private static final double ANTELOPE_CREATION_PROBABILITY = 0.05;
     // The probability that a buffalo will be created in any given grid position.
-    private static final double BUFFALO_CREATION_PROBABILITY = 0.01; 
+    private static final double BUFFALO_CREATION_PROBABILITY = 0.05; 
     // The probability that a tiger will be created in any given grid position.
     private static final double TIGER_CREATION_PROBABILITY = 0.02;
     // The probability that a hyena will be created in any given grid position.
     private static final double HYENA_CREATION_PROBABILITY = 0.04;
     
-    private static final double SHRUB_CREATION_PROBABILITY = 0.10;
+    private static final double SHRUB_CREATION_PROBABILITY = 0.1;
 
 
     // List of animals in the field.
@@ -127,6 +127,7 @@ public class Simulator
     {
         step++;
         trackTime();
+        weatherEffectSpecie();
 
         // Provide space for newborn animals.
         List<Species> newAnimals = new ArrayList<>();        
@@ -174,12 +175,12 @@ public class Simulator
         field.clear();
         for(int row = 0; row < field.getDepth(); row++) {
             for(int col = 0; col < field.getWidth(); col++) {
-                if(rand.nextDouble() <= LION_CREATION_PROBABILITY) {
-                    Location location = new Location(row, col);
-                    Lion lion = new Lion(true, field, location, false);
-                    animals.add(lion);
-                }
-                else if(rand.nextDouble() <= ANTELOPE_CREATION_PROBABILITY) {
+                // if(rand.nextDouble() <= LION_CREATION_PROBABILITY) {
+                    // Location location = new Location(row, col);
+                    // Lion lion = new Lion(true, field, location, false);
+                    // animals.add(lion);
+                // }
+                if(rand.nextDouble() <= ANTELOPE_CREATION_PROBABILITY) {
                     Location location = new Location(row, col);
                     Antelope antelope = new Antelope(true, field, location, false);
                     animals.add(antelope);
@@ -232,5 +233,12 @@ public class Simulator
         catch (InterruptedException ie) {
             // wake up
         }
+    }
+    
+    public void weatherEffectSpecie()
+    {
+        //Antelope.BREEDING_PROBABILITY = 0.2;
+        Antelope.weatherInfluence(weatherTracker.getCurrentWeather());
+        
     }
 }

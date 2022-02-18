@@ -12,9 +12,12 @@ import java.util.Random;
 public class Weather
 {
     // instance variables - replace the example below with your own
-    private ArrayList<String> typesOfWeather;
+    private ArrayList<String> dayTypesOfWeather;
+    private ArrayList<String> nightTypesOfWeather;
     
     private String currentWeather;
+    
+    private boolean flip;
     
     private static final Random rand = Randomizer.getRandom();
 
@@ -24,10 +27,15 @@ public class Weather
     public Weather()
     {
         // initialise instance variables
-        typesOfWeather = new ArrayList<>();
-        typesOfWeather.add("Sunny");
-        typesOfWeather.add("Raining");
-        typesOfWeather.add("Drought");
+        dayTypesOfWeather = new ArrayList<>();
+        dayTypesOfWeather.add("Sunny");
+        dayTypesOfWeather.add("Raining");
+        dayTypesOfWeather.add("Drought");
+        
+        nightTypesOfWeather = new ArrayList<>();
+        nightTypesOfWeather.add("Clear");
+        nightTypesOfWeather.add("Raining");
+        nightTypesOfWeather.add("Drought");
         
         currentWeather = "Sunny";
     }
@@ -40,8 +48,21 @@ public class Weather
      */
     public void setRandomWeather()
     {
-        currentWeather = typesOfWeather.get(rand.nextInt(typesOfWeather.size()));
+        if(flip) {
+            currentWeather = dayTypesOfWeather.get(rand.nextInt(dayTypesOfWeather.size()));
+            flip = !flip;
+        }
+        else {
+            currentWeather = nightTypesOfWeather.get(rand.nextInt(nightTypesOfWeather.size()));
+            flip = !flip;
+        }
+        //currentWeather = dayTypesOfWeather.get(rand.nextInt(dayTypesOfWeather.size()));
     }
+    
+    // public void setNightRandomWeather()
+    // {
+        // currentWeather = nightTypesOfWeather.get(rand.nextInt(nightTypesOfWeather.size()));
+    // }
     
     public String getCurrentWeather()
     {

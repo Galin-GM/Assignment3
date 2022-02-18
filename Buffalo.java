@@ -28,7 +28,7 @@ public class Buffalo extends Animal
     private static final int PLANT_FOOD_VALUE = 10;
     
     // Initial antelope food level.
-    private int foodLevel = 20;
+    private int foodLevel;
     
     // Individual characteristics (instance fields).
     
@@ -49,6 +49,7 @@ public class Buffalo extends Animal
         age = 0;
         if(randomAge) {
             age = rand.nextInt(MAX_AGE);
+            foodLevel = rand.nextInt(PLANT_FOOD_VALUE);
         }
     }
     
@@ -157,9 +158,9 @@ public class Buffalo extends Animal
         Iterator<Location> it = adjacent.iterator();
         while(it.hasNext()) {
             Location where = it.next();
-            Object plants = field.getObjectAt(where);
-            if(plants instanceof Shrub) {
-                Shrub shrub = (Shrub) plants;
+            Object plant = field.getObjectAt(where);
+            if(plant instanceof Shrub) {
+                Shrub shrub = (Shrub) plant;
                 if(shrub.isAlive()) { 
                     shrub.setDead();
                     foodLevel = PLANT_FOOD_VALUE;

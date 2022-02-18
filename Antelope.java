@@ -18,7 +18,7 @@ public class Antelope extends Animal
     // The age to which a antelope can live.
     private static final int MAX_AGE = 80;
     // The likelihood of a antelope breeding.
-    private static final double BREEDING_PROBABILITY = 0.05;
+    private static double BREEDING_PROBABILITY = 0.05;
     // The maximum number of births.
     private static final int MAX_LITTER_SIZE = 3;
     // A shared random number generator to control breeding.
@@ -26,7 +26,7 @@ public class Antelope extends Animal
     // Initial plant food value.
     private static final int PLANT_FOOD_VALUE = 10;
     // Initial antelope food level.
-    private int foodLevel = 50;
+    private int foodLevel;
     
     // Individual characteristics (instance fields).
     
@@ -47,6 +47,7 @@ public class Antelope extends Animal
         age = 0;
         if(randomAge) {
             age = rand.nextInt(MAX_AGE);
+            foodLevel = rand.nextInt(PLANT_FOOD_VALUE);
         }
     }
     
@@ -156,9 +157,9 @@ public class Antelope extends Animal
         Iterator<Location> it = adjacent.iterator();
         while(it.hasNext()) {
             Location where = it.next();
-            Object plants = field.getObjectAt(where);
-            if(plants instanceof Shrub) {
-                Shrub shrub = (Shrub) plants;
+            Object plant = field.getObjectAt(where);
+            if(plant instanceof Shrub) {
+                Shrub shrub = (Shrub) plant;
                 if(shrub.isAlive()) { 
                     shrub.setDead();
                     foodLevel = PLANT_FOOD_VALUE;
@@ -174,6 +175,22 @@ public class Antelope extends Animal
         foodLevel--;
         if(foodLevel <= 0) {
             setDead();
+        }
+    }
+    
+    static public void weatherInfluence(String currentWeather)
+    {
+        String weatherNow = currentWeather;
+        switch(weatherNow) {
+            case "Sunny":
+                BREEDING_PROBABILITY = 0.1;
+                break;
+            case "Raining":
+                BREEDING_PROBABILITY = 0.3;
+                break;
+            
+                
+            default: BREEDING_PROBABILITY = 0.05;
         }
     }
 }
