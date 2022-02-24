@@ -143,9 +143,9 @@ public class Lion extends Animal
     }
     
     /**
-     * Check whether or not this tiger is to give birth at this step.
+     * Check whether or not this lion is to give birth at this step.
      * New births will be made into free adjacent locations.
-     * @param newTigers A list to return newly born tigers.
+     * @param newLions A list to return newly born lions.
      */
     private void giveBirth(List<Species> newLions)
     {
@@ -191,13 +191,16 @@ public class Lion extends Animal
     }
 
     /**
-     * A tiger can breed if it has reached the breeding age.
+     * A lion can breed if it has reached the breeding age.
      */
     private boolean canBreed()
     {
         return age >= BREEDING_AGE;
     }
     
+    /**
+     * Change the breeding probability of this lion based on the current weather conditions.
+     */
     static public void weatherInfluence(String currentWeather)
     {
         String weatherNow = currentWeather;

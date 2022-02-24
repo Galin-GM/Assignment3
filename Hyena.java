@@ -4,9 +4,9 @@ import java.util.Random;
 
 /**
  * A simple model of a hyena.
- * hyena age, move, eat rabbits, and die.
+ * hyena age, move, eat buffalos and antelopes, and die.
  * 
- * @author David J. Barnes and Michael Kölling
+ * @author David J. Barnes and Michael Kölling and Galin Mihaylov and Ricky Brown
  * @version 2016.02.29 (2)
  */
 public class Hyena extends Animal
@@ -24,6 +24,7 @@ public class Hyena extends Animal
     // The food value of a single rabbit. In effect, this is the
     // number of steps a hyena can go before it has to eat again.
     private static final int ANTELOPE_FOOD_VALUE = 9;
+    private static final int BUFFALO_FOOD_VALUE = 9;
     // A shared random number generator to control breeding.
     private static final Random rand = Randomizer.getRandom();
     
@@ -120,11 +121,19 @@ public class Hyena extends Animal
         while(it.hasNext()) {
             Location where = it.next();
             Object animal = field.getObjectAt(where);
-            if(animal instanceof Antelope) {
+            if(animal instanceof Antelope){
                 Antelope antelope = (Antelope) animal;
                 if(antelope.isAlive()) { 
                     antelope.setDead();
                     foodLevel = ANTELOPE_FOOD_VALUE;
+                    return where;
+                }
+            }
+            else if(animal instanceof Buffalo) {
+                Buffalo buffalo = (Buffalo) animal;
+                if(buffalo.isAlive()) {
+                    buffalo.setDead();
+                    foodLevel = BUFFALO_FOOD_VALUE;
                     return where;
                 }
             }
@@ -139,7 +148,7 @@ public class Hyena extends Animal
      */
     private void giveBirth(List<Species> newHyenas)
     {
-        // New liones are born into adjacent locations.
+        // New hyenas are born into adjacent locations.
         // Get a list of adjacent free locations.
         Field field = getField();
         List<Location> free = field.getFreeAdjacentLocations(getLocation());
@@ -188,6 +197,9 @@ public class Hyena extends Animal
         return age >= BREEDING_AGE;
     }
     
+    /**
+     * Change the breeding probability of this hyena based on the current weather conditions.
+     */
     static public void weatherInfluence(String currentWeather)
     {
         String weatherNow = currentWeather;

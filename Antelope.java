@@ -6,7 +6,7 @@ import java.util.Iterator;
  * A simple model of a antelope.
  * Antelopes age, move, breed, and die.
  * 
- * @author David J. Barnes and Michael Kölling
+ * @author David J. Barnes and Michael Kölling and Galin Mihaylov and Ricky Brown.
  * @version 2016.02.29 (2)
  */
 public class Antelope extends Animal
@@ -18,23 +18,21 @@ public class Antelope extends Animal
     // The age to which a antelope can live.
     private static final int MAX_AGE = 70;
     // The likelihood of a antelope breeding.
-
     private static double BREEDING_PROBABILITY = 0.05;
-
-
     // The maximum number of births.
     private static final int MAX_LITTER_SIZE = 3;
     // A shared random number generator to control breeding.
     private static final Random rand = Randomizer.getRandom();
     // Initial plant food value.
     private static final int PLANT_FOOD_VALUE = 10;
-    // Initial antelope food level.
-    private int foodLevel;
+    
     
     // Individual characteristics (instance fields).
     
     // The antelope's age.
     private int age;
+    // Initial antelope food level.
+    private int foodLevel;
 
     /**
      * Create a new antelope. A antelope may be created with age
@@ -154,6 +152,11 @@ public class Antelope extends Animal
         return age >= BREEDING_AGE;
     }
     
+    /**
+     * Look for shrub adjacent to the current location.
+     * Only the first live shrub is eaten.
+     * @return Where food was found, or null if it wasn't.
+     */
     private Location findFood()
     {
         Field field = getField();
@@ -174,6 +177,9 @@ public class Antelope extends Animal
         return null;
     }
     
+    /**
+     * Make this antelope more hungry. This could result in the antelope's death.
+     */
     private void incrementHunger()
     {
         foodLevel--;
@@ -182,6 +188,9 @@ public class Antelope extends Animal
         }
     }
     
+    /**
+     * Change the breeding probability of this antelope based on the current weather conditions.
+     */
     static public void weatherInfluence(String currentWeather)
     {
         String weatherNow = currentWeather;

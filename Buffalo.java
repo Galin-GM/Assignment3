@@ -6,7 +6,7 @@ import java.util.Iterator;
  * A simple model of a buffalo.
  * Buffalos age, move, breed, and die.
  * 
- * @author David J. Barnes and Michael Kölling
+ * @author David J. Barnes and Michael Kölling and Galin Mihaylov and Ricky Brown
  * @version 2016.02.29 (2)
  */
 public class Buffalo extends Animal
@@ -26,17 +26,13 @@ public class Buffalo extends Animal
     
     // Initial plant food value
     private static final int PLANT_FOOD_VALUE = 10;
-    
-
-    // Initial antelope food level.
-    private int foodLevel;
-
-    // Initial buffalo food level.
-
+ 
     // Individual characteristics (instance fields).
     
     // The buffalo's age.
     private int age;
+    // Initial antelope food level.
+    private int foodLevel;
 
     /**
      * Create a new buffalo. A buffalo may be created with age
@@ -147,8 +143,8 @@ public class Buffalo extends Animal
     }
 
     /**
-     * A antelope can breed if it has reached the breeding age.
-     * @return true if the antelope can breed, false otherwise.
+     * A buffalo can breed if it has reached the breeding age.
+     * @return true if the buffalo can breed, false otherwise.
      */
     private boolean canBreed()
     {
@@ -175,6 +171,9 @@ public class Buffalo extends Animal
         return null;
     }
     
+    /**
+     * Make this antelope more hungry. This could result in the antelope's death.
+     */
     private void incrementHunger()
     {
         foodLevel--;
@@ -183,6 +182,9 @@ public class Buffalo extends Animal
         }
     }
     
+    /**
+     * Change the breeding probability of this buffalo based on the current weather conditions.
+     */
     static public void weatherInfluence(String currentWeather)
     {
         String weatherNow = currentWeather;

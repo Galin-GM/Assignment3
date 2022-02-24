@@ -1,8 +1,6 @@
 import java.util.ArrayList;
 import java.util.Random;
 
-
-
 /**
  * A class for tracking the weather.
  *
@@ -17,8 +15,9 @@ public class Weather
     // The current weather of the simulation.
     private String currentWeather;
     
-    // Boolean used to flip betweening selecting daytime weather and night-time weather.
+    // Boolean used to flip between selecting daytime weather and night-time weather.
     private boolean flip;
+    
     // A random number generator to select random position in array.
     private static final Random rand = Randomizer.getRandom();
 
@@ -64,7 +63,7 @@ public class Weather
     
     /**
      * Returns the current weather of the simulation.
-     * @return the current weather of the simulation.
+     * @return the current weather of the simulation in String form.
      */
     public String getCurrentWeather()
     {

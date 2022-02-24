@@ -6,7 +6,7 @@ import java.util.Random;
  * A simple model of a tiger.
  * tigers age, move, eat antelopes and buffalos, and die.
  * 
- * @author David J. Barnes and Michael Kölling
+ * @author David J. Barnes and Michael Kölling and Galin Mihaylov and Ricky Brown
  * @version 2016.02.29 (2)
  */
 public class Tiger extends Animal
@@ -198,6 +198,9 @@ public class Tiger extends Animal
         return age >= BREEDING_AGE;
     }
     
+    /**
+     * Change the breeding probability of this tiger based on the current weather conditions.
+     */
     static public void weatherInfluence(String currentWeather)
     {
         String weatherNow = currentWeather;

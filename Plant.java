@@ -1,24 +1,20 @@
 
 /**
- * Write a description of class Plant here.
+ * A class representing shared characteristics of plant.
  *
- * @author (your name)
- * @version (a version number or a date)
+ * @author Galin Mihaylov and Ricky Brown.
  */
 public abstract class Plant extends Species
 {
-    // instance variables - replace the example below with your own
-    //private int age;
-    
-    
-
     /**
-     * Constructor for objects of class Plant
+     * Create a new plant at location in field.
+     * 
+     * @param field The field currently occupied.
+     * @param location The location within the field.
+     * @param isNocturnal If true, the plant is nocturnal.
      */
     public Plant(Field field, Location location, boolean isNocturnal)
     {
-        super(field, location, isNocturnal);
-        
+        super(field, location, isNocturnal);        
     }
-
 }

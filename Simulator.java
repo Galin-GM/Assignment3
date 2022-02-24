@@ -7,9 +7,9 @@ import java.awt.Color;
 
 /**
  * A simple predator-prey simulator, based on a rectangular field
- * containing Lions, Tigers, Hyenas, Antelopes and Buffalos.
+ * containing Lions, Tigers, Hyenas, Antelopes, Buffalos and Shrub.
  * 
- * @author David J. Barnes and Michael Kölling
+ * @author David J. Barnes and Michael Kölling and Galin Mihaylov and Ricky Brown
  * @version 2016.02.29 (2)
  */
 public class Simulator
@@ -24,25 +24,19 @@ public class Simulator
     // The probability that a lion will be created in any given grid position.
     private static final double LION_CREATION_PROBABILITY = 0.01;
     // The probability that a antelope will be created in any given grid position.
-
     private static final double ANTELOPE_CREATION_PROBABILITY = 0.05;
-
-
     // The probability that a buffalo will be created in any given grid position.
-
     private static final double BUFFALO_CREATION_PROBABILITY = 0.05; 
-
-
     // The probability that a tiger will be created in any given grid position.
     private static final double TIGER_CREATION_PROBABILITY = 0.02;
     // The probability that a hyena will be created in any given grid position.
     private static final double HYENA_CREATION_PROBABILITY = 0.04;
-    
+    // The probability that a shrub will be created in any given grid position.
     private static final double SHRUB_CREATION_PROBABILITY = 0.05;
 
 
     // List of animals in the field.
-    private List<Species> animals;
+    private List<Species> species;
     // The current state of the field.
     private Field field;
     // The current step of the simulation.
@@ -78,7 +72,7 @@ public class Simulator
             width = DEFAULT_WIDTH;
         }
         
-        animals = new ArrayList<>();
+        species = new ArrayList<>();
         field = new Field(depth, width);
         timeTracker = new TimeOfDay();
         weatherTracker = new Weather();
@@ -90,11 +84,12 @@ public class Simulator
         view.setColor(Antelope.class, Color.ORANGE);
         view.setColor(Buffalo.class, Color.BLACK);
 
-        // Set predator colours
+        // Set predator colours.
         view.setColor(Lion.class, Color.BLUE);
         view.setColor(Tiger.class, Color.RED);
         view.setColor(Hyena.class, Color.gray);
         
+        // Set plant colours.
         view.setColor(Shrub.class, Color.GREEN);
 
         
@@ -127,7 +122,7 @@ public class Simulator
     /**
      * Run the simulation from its current state for a single step.
      * Iterate over the whole field updating the state of each
-     * fox and rabbit.
+     * specie.
      */
     public void simulateOneStep()
     {
@@ -136,25 +131,25 @@ public class Simulator
         weatherEffectSpecie();
 
         // Provide space for newborn animals.
-        List<Species> newAnimals = new ArrayList<>();        
+        List<Species> newSpecies = new ArrayList<>();        
         // Let all rabbits act.
-        for(Iterator<Species> it = animals.iterator(); it.hasNext(); ) {
+        for(Iterator<Species> it = species.iterator(); it.hasNext(); ) {
             
-            Species animal = it.next();
-            if(!animal.getIsNocturnal() & timeTracker.isItDay()) {
-                animal.act(newAnimals);
+            Species specie = it.next();
+            if(! specie.getIsNocturnal() & timeTracker.isItDay()) {
+                specie.act(newSpecies);
             }
-            else if(animal.getIsNocturnal() & !timeTracker.isItDay()) {
-                animal.act(newAnimals);
+            else if(specie.getIsNocturnal() & ! timeTracker.isItDay()) {
+                specie.act(newSpecies);
             }
             
-            if(! animal.isAlive()) {
+            if(! specie.isAlive()) {
                 it.remove();
             }
         }
                
-        // Add the newly born foxes and rabbits to the main lists.
-        animals.addAll(newAnimals);
+        // Add the newly born species to the main lists.
+        species.addAll(newSpecies);
 
         view.showStatus(step, field, timeTracker.dayOrNight(), weatherTracker.getCurrentWeather());
     }
@@ -165,7 +160,7 @@ public class Simulator
     public void reset()
     {
         step = 0;
-        animals.clear();
+        species.clear();
         populate();
         
         // Show the starting state in the view.
@@ -173,7 +168,7 @@ public class Simulator
     }
     
     /**
-     * Randomly populate the field with foxes and rabbits.
+     * Randomly populate the field with lions, tigers, hyenas, bufallos, antelopes and shrub.
      */
     private void populate()
     {
@@ -184,33 +179,33 @@ public class Simulator
                 // if(rand.nextDouble() <= LION_CREATION_PROBABILITY) {
                     // Location location = new Location(row, col);
                     // Lion lion = new Lion(true, field, location, false);
-                    // animals.add(lion);
+                    // species.add(lion);
                 // }
                 if(rand.nextDouble() <= ANTELOPE_CREATION_PROBABILITY) {
                     Location location = new Location(row, col);
                     Antelope antelope = new Antelope(true, field, location, false);
-                    animals.add(antelope);
+                    species.add(antelope);
                 }
 
                 else if(rand.nextDouble() <= BUFFALO_CREATION_PROBABILITY) {
                     Location location = new Location(row, col);
                     Buffalo buffalo = new Buffalo(true, field, location, false);
-                    animals.add(buffalo);
+                    species.add(buffalo);
                 }
                 // if(rand.nextDouble() <= TIGER_CREATION_PROBABILITY) {
                     // Location location = new Location(row, col);
                     // Tiger tiger = new Tiger(true, field, location, false);
-                    // animals.add(tiger);
+                    // species.add(tiger);
                 // } 
                 // else if(rand.nextDouble() <= HYENA_CREATION_PROBABILITY) {
                     // Location location = new Location(row, col);
                     // Hyena hyena = new Hyena(true, field, location, true);
-                    // animals.add(hyena);
+                    // species.add(hyena);
                 // }
                 else if(rand.nextDouble() <= SHRUB_CREATION_PROBABILITY) {
                     Location location = new Location(row, col);
                     Shrub shrub = new Shrub(true, field, location, false);
-                    animals.add(shrub);
+                    species.add(shrub);
                 }
                 // }
                 // else leave the location empty.
@@ -242,7 +237,11 @@ public class Simulator
     
     private void weatherEffectSpecie()
     {
+        Lion.weatherInfluence(weatherTracker.getCurrentWeather());
+        Tiger.weatherInfluence(weatherTracker.getCurrentWeather());
+        Hyena.weatherInfluence(weatherTracker.getCurrentWeather());
+        Buffalo.weatherInfluence(weatherTracker.getCurrentWeather());
         Antelope.weatherInfluence(weatherTracker.getCurrentWeather());
-        
+        Shrub.weatherInfluence(weatherTracker.getCurrentWeather());
     }
 }

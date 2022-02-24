@@ -18,7 +18,11 @@ public abstract class Species
     private boolean isNocturnal;
 
     /**
-     * Constructor for objects of class Species
+     * Create a new specie at location in the field
+     * 
+     * @param field The field currently occupied.
+     * @param location The location within the field.
+     * @param isNocturnal If true, the animal is nocturnal.
      */
     public Species(Field field, Location location, boolean isNocturnal)
     {
@@ -31,30 +35,27 @@ public abstract class Species
     /**
      * Make this specie act - that is: make it do
      * whatever it wants/needs to do.
-     * @param newAnimals A list to receive newly born animals.
+     * @param newAnimals A list to receive newly born speices
      */
-    abstract public void act(List<Species> newAnimal);
-    
-    
+    abstract public void act(List<Species> newSpecie);
+        
     /**
-     * Check whether the animal is alive or not.
-     * @return true if the animal is still alive.
+     * Check whether the specie is alive or not.
+     * @return true if the specie is still alive.
      */
     protected boolean isAlive()
     {
         return alive;
     }
 
-    
-     /**
+         /**
      * Check whether this animal is nocturnal or not.
      * @ return true if the animal is nocturnal.
      */
     protected boolean getIsNocturnal() {
         return isNocturnal;
     }
-    
-    
+        
     /**
      * Indicate that the animal is no longer alive.
      * It is removed from the field.
