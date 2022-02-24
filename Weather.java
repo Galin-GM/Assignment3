@@ -4,47 +4,51 @@ import java.util.Random;
 
 
 /**
- * Write a description of class Weather here.
+ * A class for tracking the weather.
  *
- * @author (your name)
- * @version (a version number or a date)
+ * @author Galin Mihaylov and Ricky Brown
  */
 public class Weather
 {
-    // instance variables - replace the example below with your own
+    // Arrays that hold all the types of weather for day and night.
     private ArrayList<String> dayTypesOfWeather;
     private ArrayList<String> nightTypesOfWeather;
     
+    // The current weather of the simulation.
     private String currentWeather;
     
+    // Boolean used to flip betweening selecting daytime weather and night-time weather.
     private boolean flip;
-    
+    // A random number generator to select random position in array.
     private static final Random rand = Randomizer.getRandom();
 
     /**
-     * Constructor for objects of class Weather
+     * Start the simulation as sunny.
+     * Weather at which the simulation starts can be changed by altering the assignment to currentWeather.
      */
     public Weather()
     {
-        // initialise instance variables
+        // Create ArrayList object for day time weathers.
         dayTypesOfWeather = new ArrayList<>();
+        // Add all types of day time weathers to the array list.
         dayTypesOfWeather.add("Sunny");
         dayTypesOfWeather.add("Raining");
         dayTypesOfWeather.add("Drought");
         
+        // Create ArrayList object for night time weathers.
         nightTypesOfWeather = new ArrayList<>();
+        // Add all types of night time weathers to the array list.
         nightTypesOfWeather.add("Clear");
         nightTypesOfWeather.add("Raining");
         nightTypesOfWeather.add("Drought");
         
+        // Set the weather at which the simulation starts.
         currentWeather = "Sunny";
     }
     
     /**
-     * An example of a method - replace this comment with your own
-     *
-     * @param  y  a sample parameter for a method
-     * @return    the sum of x and y
+     * Select a random weather type from the day or night array list.
+     * Store the weather type selected in the currentWeather field.
      */
     public void setRandomWeather()
     {
@@ -58,6 +62,10 @@ public class Weather
         }
     }
     
+    /**
+     * Returns the current weather of the simulation.
+     * @return the current weather of the simulation.
+     */
     public String getCurrentWeather()
     {
         return currentWeather;

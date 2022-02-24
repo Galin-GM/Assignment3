@@ -42,6 +42,7 @@ public class Lion extends Animal
      * @param randomAge If true, the lion will have random age and hunger level.
      * @param field The field currently occupied.
      * @param location The location within the field.
+     * @param isNocturnal If true, the animal is nocturnal.
      */
     public Lion(boolean randomAge, Field field, Location location, boolean isNocturnal)
     {

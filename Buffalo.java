@@ -45,6 +45,7 @@ public class Buffalo extends Animal
      * @param randomAge If true, the buffalo will have a random age.
      * @param field The field currently occupied.
      * @param location The location within the field.
+     * @param isNocturnal If true, the animal is nocturnal.
      */
     public Buffalo(boolean randomAge, Field field, Location location, boolean isNocturnal)
     {

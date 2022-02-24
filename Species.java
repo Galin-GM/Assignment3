@@ -2,10 +2,9 @@ import java.util.List;
 import java.util.Random;
 
 /**
- * Write a description of class Species here.
+ * A class representing shared characteristics of species.
  *
- * @author (your name)
- * @version (a version number or a date)
+ * @author Galin Mihaylov and Ricky Brown.
  */
 public abstract class Species
 {
@@ -15,7 +14,7 @@ public abstract class Species
     private Field field;
     // The animal's position in the field.
     private Location location;
-    
+    // Whether the animal is nocturnal or not.
     private boolean isNocturnal;
 
     /**
@@ -30,7 +29,7 @@ public abstract class Species
     }
 
     /**
-     * Make this animal act - that is: make it do
+     * Make this specie act - that is: make it do
      * whatever it wants/needs to do.
      * @param newAnimals A list to receive newly born animals.
      */

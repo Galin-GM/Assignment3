@@ -42,6 +42,7 @@ public class Tiger extends Animal
      * @param randomAge If true, the tiger will have random age and hunger level.
      * @param field The field currently occupied.
      * @param location The location within the field.
+     * @param isNocturnal If true, the animal is nocturnal.
      */
     public Tiger(boolean randomAge, Field field, Location location, boolean isNocturnal)
     {

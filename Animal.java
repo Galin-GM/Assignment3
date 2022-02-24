@@ -4,7 +4,7 @@ import java.util.Random;
 /**
  * A class representing shared characteristics of animals.
  * 
- * @author David J. Barnes and Michael Kölling
+ * @author David J. Barnes and Michael Kölling and Galin Mihaylov and Ricky Brown
  * @version 2016.02.29 (2)
  */
 public abstract class Animal extends Species
@@ -17,6 +17,7 @@ public abstract class Animal extends Species
     // private Location location;
     // Whether the animal is nocturnal or not.
     // private boolean isNocturnal;
+    
     // The sex of the animal.
     private char sex;
     
@@ -25,6 +26,7 @@ public abstract class Animal extends Species
      * 
      * @param field The field currently occupied.
      * @param location The location within the field.
+     * @param isNocturnal If true, the animal is nocturnal.
      */
     public Animal(Field field, Location location, boolean isNocturnal)
     {
@@ -36,7 +38,7 @@ public abstract class Animal extends Species
     
     /**
      * Check whether this animal is a male or female.
-     * @ return 'f' is this animal is a female and 'm' if this animal is a male.
+     * @return 'f' is this animal is a female and 'm' if this animal is a male.
      */
     protected char getSex() 
     {

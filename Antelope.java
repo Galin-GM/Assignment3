@@ -43,6 +43,7 @@ public class Antelope extends Animal
      * @param randomAge If true, the antelope will have a random age.
      * @param field The field currently occupied.
      * @param location The location within the field.
+     * @param isNocturnal If true, the animal is nocturnal.
      */
     public Antelope(boolean randomAge, Field field, Location location, boolean isNocturnal)
     {
