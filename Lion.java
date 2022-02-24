@@ -15,16 +15,15 @@ public class Lion extends Animal
     
     // The age at which a lion can start to breed.
     private static final int BREEDING_AGE = 10;
-    // The age to which a lion can live.
-    private static final int MAX_AGE = 100;
+    
     // The likelihood of a lion breeding.
-    private static double BREEDING_PROBABILITY = 0.5;
+    private static double BREEDING_PROBABILITY;
     // The maximum number of births.
-    private static final int MAX_LITTER_SIZE = 1;
+    private static final int MAX_LITTER_SIZE = 4;
     // The food value of a single antelope/buffalo. In effect, this is the
     // number of steps a lion can go before it has to eat again.
-    private static final int ANTELOPE_FOOD_VALUE = 12;
-    private static final int BUFFALO_FOOD_VALUE = 12;
+    private static final int ANTELOPE_FOOD_VALUE = 21;
+    private static final int BUFFALO_FOOD_VALUE = 21;
 
     // A shared random number generator to control breeding.
     private static final Random rand = Randomizer.getRandom();
@@ -34,6 +33,8 @@ public class Lion extends Animal
     private int age;
     // The lion's food level, which is increased by eating antelopes/buffalos.
     private int foodLevel;
+    // The age to which a lion can live.
+    private int MAX_AGE = ageMethod();
 
     /**
      * Create a lion. A lion can be created as a new born (age zero
@@ -199,6 +200,22 @@ public class Lion extends Animal
     }
     
     /**
+     * Change the max age of the lion depending on whether or not is it diseased.
+     */
+    private int ageMethod()
+    {
+        if(getIsDiseased()) {
+            // Max age if diseased.
+            MAX_AGE = 60;
+        }
+        else {
+            // Max age if not diseased.
+            MAX_AGE = 100;
+        }
+        return MAX_AGE;
+    }
+    
+    /**
      * Change the breeding probability of this lion based on the current weather conditions.
      */
     static public void weatherInfluence(String currentWeather)
@@ -206,16 +223,16 @@ public class Lion extends Animal
         String weatherNow = currentWeather;
         switch(weatherNow) {
             case "Sunny":
-                BREEDING_PROBABILITY = 0.1;
+                BREEDING_PROBABILITY = 0.15;
                 break;
             case "Raining":
-                BREEDING_PROBABILITY = 0.3;
+                BREEDING_PROBABILITY = 0.13;
                 break;
             case "Drought":
-                BREEDING_PROBABILITY = 0.3;
+                BREEDING_PROBABILITY = 0.04;
                 break;
             case "Clear":
-                BREEDING_PROBABILITY = 0.3;
+                BREEDING_PROBABILITY = 0.08;
                 break;
             
                 

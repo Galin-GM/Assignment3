@@ -15,17 +15,15 @@ public class Buffalo extends Animal
 
     // The age at which a buffalo can start to breed.
     private static final int BREEDING_AGE = 5;
-    // The age to which a buffalo can live.
-    private static final int MAX_AGE = 80;
     // The likelihood of a buffalo breeding.
-    private static double BREEDING_PROBABILITY = 0.10;
+    private static double BREEDING_PROBABILITY;
     // The maximum number of births.
     private static final int MAX_LITTER_SIZE = 3;
     // A shared random number generator to control breeding.
     private static final Random rand = Randomizer.getRandom();
     
     // Initial plant food value
-    private static final int PLANT_FOOD_VALUE = 10;
+    private static final int PLANT_FOOD_VALUE = 12;
  
     // Individual characteristics (instance fields).
     
@@ -33,6 +31,8 @@ public class Buffalo extends Animal
     private int age;
     // Initial antelope food level.
     private int foodLevel;
+    // The age to which a buffalo can live.
+    private int MAX_AGE;
 
     /**
      * Create a new buffalo. A buffalo may be created with age
@@ -46,10 +46,14 @@ public class Buffalo extends Animal
     public Buffalo(boolean randomAge, Field field, Location location, boolean isNocturnal)
     {
         super(field, location, isNocturnal);
-        age = 0;
+        MAX_AGE = ageMethod();
         if(randomAge) {
             age = rand.nextInt(MAX_AGE);
             foodLevel = rand.nextInt(PLANT_FOOD_VALUE);
+        }
+        else {
+            age = 0;
+            foodLevel = PLANT_FOOD_VALUE;
         }
     }
     
@@ -121,7 +125,7 @@ public class Buffalo extends Animal
                     for(int b = 0; b < births && free.size() > 0; b++) {
                         Location loc = free.remove(0);
                         Buffalo young = new Buffalo(false, field, loc, false);
-                        newBuffalos.add(young);
+                        newBuffalos.add(young);                      
                     }   
                 }
             }
@@ -183,6 +187,22 @@ public class Buffalo extends Animal
     }
     
     /**
+     * Change the max age of the buffalo depending on whether or not is it diseased.
+     */
+    private int ageMethod()
+    {
+        if(getIsDiseased()) {
+            // Max age if diseased.
+            MAX_AGE = 30;
+        }
+        else {
+            // Max age if not diseased.
+            MAX_AGE = 55;
+        }
+        return MAX_AGE;
+    }
+    
+    /**
      * Change the breeding probability of this buffalo based on the current weather conditions.
      */
     static public void weatherInfluence(String currentWeather)
@@ -190,16 +210,16 @@ public class Buffalo extends Animal
         String weatherNow = currentWeather;
         switch(weatherNow) {
             case "Sunny":
-                BREEDING_PROBABILITY = 0.1;
+                BREEDING_PROBABILITY = 0.14;
                 break;
             case "Raining":
-                BREEDING_PROBABILITY = 0.3;
+                BREEDING_PROBABILITY = 0.12;
                 break;
             case "Drought":
-                BREEDING_PROBABILITY = 0.3;
+                BREEDING_PROBABILITY = 0.08;
                 break;
             case "Clear":
-                BREEDING_PROBABILITY = 0.3;
+                BREEDING_PROBABILITY = 0.08;
                 break;
             
                 

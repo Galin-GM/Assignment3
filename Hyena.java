@@ -15,16 +15,14 @@ public class Hyena extends Animal
     
     // The age at which a hyena can start to breed.
     private static final int BREEDING_AGE = 15;
-    // The age to which a hyena can live.
-    private static final int MAX_AGE = 150;
     // The likelihood of a hyena breeding.
     private static double BREEDING_PROBABILITY = 0.08;
     // The maximum number of births.
     private static final int MAX_LITTER_SIZE = 2;
     // The food value of a single rabbit. In effect, this is the
     // number of steps a hyena can go before it has to eat again.
-    private static final int ANTELOPE_FOOD_VALUE = 9;
-    private static final int BUFFALO_FOOD_VALUE = 9;
+    private static final int ANTELOPE_FOOD_VALUE = 25;
+    private static final int BUFFALO_FOOD_VALUE = 25;
     // A shared random number generator to control breeding.
     private static final Random rand = Randomizer.getRandom();
     
@@ -33,6 +31,8 @@ public class Hyena extends Animal
     private int age;
     // The hyena's food level, which is increased by eating rabbits.
     private int foodLevel;
+     // The age to which a hyena can live.
+    private int MAX_AGE = ageMethod();
 
     /**
      * Create a hyena. A hyena can be created as a new born (age zero
@@ -167,7 +167,7 @@ public class Hyena extends Animal
                 if(hyena.getSex() != nextHyena.getSex()) {
                     for(int b = 0; b < births && free.size() > 0; b++) {
                         Location loc = free.remove(0);
-                        Hyena young = new Hyena(false, field, loc, false);
+                        Hyena young = new Hyena(false, field, loc, true);
                         newHyenas.add(young);
                     }   
                 }
@@ -198,6 +198,22 @@ public class Hyena extends Animal
     }
     
     /**
+     * Change the max age of the hyena depending on whether or not is it diseased.
+     */
+    private int ageMethod()
+    {
+        if(getIsDiseased()) {
+            // Max age if diseased.
+            MAX_AGE = 60;
+        }
+        else {
+            // Max age if not diseased.
+            MAX_AGE = 100;
+        }
+        return MAX_AGE;
+    }
+    
+    /**
      * Change the breeding probability of this hyena based on the current weather conditions.
      */
     static public void weatherInfluence(String currentWeather)
@@ -208,13 +224,13 @@ public class Hyena extends Animal
                 BREEDING_PROBABILITY = 0.1;
                 break;
             case "Raining":
-                BREEDING_PROBABILITY = 0.3;
+                BREEDING_PROBABILITY = 0.07;
                 break;
             case "Drought":
-                BREEDING_PROBABILITY = 0.3;
+                BREEDING_PROBABILITY = 0.03;
                 break;
             case "Clear":
-                BREEDING_PROBABILITY = 0.3;
+                BREEDING_PROBABILITY = 0.1;
                 break;
             
                 

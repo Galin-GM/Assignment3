@@ -15,16 +15,15 @@ public class Tiger extends Animal
     
     // The age at which a tiger can start to breed.
     private static final int BREEDING_AGE = 15;
-    // The age to which a tiger can live.
-    private static final int MAX_AGE = 150;
+    
     // The likelihood of a tiger breeding.
-    private static double BREEDING_PROBABILITY = 0.5;
+    private static double BREEDING_PROBABILITY;
     // The maximum number of births.
-    private static final int MAX_LITTER_SIZE = 20;
+    private static final int MAX_LITTER_SIZE = 1;
     // The food value of a single antelope/buffalo. In effect, this is the
     // number of steps a tiger can go before it has to eat again.
-    private static final int ANTELOPE_FOOD_VALUE = 15;
-    private static final int BUFFALO_FOOD_VALUE = 15;
+    private static final int ANTELOPE_FOOD_VALUE = 18;
+    private static final int BUFFALO_FOOD_VALUE = 18;
 
     // A shared random number generator to control breeding.
     private static final Random rand = Randomizer.getRandom();
@@ -34,6 +33,8 @@ public class Tiger extends Animal
     private int age;
     // The tiger's food level, which is increased by eating antelopes/buffalos.
     private int foodLevel;
+    // The age to which a tiger can live.
+    private int MAX_AGE = ageMethod();
 
     /**
      * Create a tiger. A tiger can be created as a new born (age zero
@@ -199,6 +200,23 @@ public class Tiger extends Animal
     }
     
     /**
+     * Change the max age of the tiger depending on whether or not is it diseased.
+     */
+    private int ageMethod()
+    {
+        if(getIsDiseased()) {
+            // Max age if diseased.
+            MAX_AGE = 60;
+        }
+        else {
+            // Max age if not diseased.
+            MAX_AGE = 100;
+        }
+        return MAX_AGE;
+    }
+    
+    
+    /**
      * Change the breeding probability of this tiger based on the current weather conditions.
      */
     static public void weatherInfluence(String currentWeather)
@@ -206,16 +224,16 @@ public class Tiger extends Animal
         String weatherNow = currentWeather;
         switch(weatherNow) {
             case "Sunny":
-                BREEDING_PROBABILITY = 0.1;
+                BREEDING_PROBABILITY = 0.08;
                 break;
             case "Raining":
-                BREEDING_PROBABILITY = 0.3;
+                BREEDING_PROBABILITY = 0.05;
                 break;
             case "Drought":
-                BREEDING_PROBABILITY = 0.3;
+                BREEDING_PROBABILITY = 0.02;
                 break;
             case "Clear":
-                BREEDING_PROBABILITY = 0.3;
+                BREEDING_PROBABILITY = 0.08;
                 break;
             
                 

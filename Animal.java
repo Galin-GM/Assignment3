@@ -28,6 +28,7 @@ public abstract class Animal extends Species
     {
         super(field, location, isNocturnal);
         this.sex = generateSex();
+        this.isDiseased = generateIsDiseased();
     }
         
     /**
@@ -56,5 +57,22 @@ public abstract class Animal extends Species
         }
         return sex;
     }
+    
+    protected boolean getIsDiseased()
+    {
+        return isDiseased;
+    }
+    
+    protected boolean generateIsDiseased()
+    {
+        double probability = 0.10;
         
+        if(rand.nextDouble() <= probability) {
+            isDiseased = true;
+        }
+        else {
+            isDiseased = false;
+        }
+        return isDiseased;
+    }
 }

@@ -15,16 +15,14 @@ public class Antelope extends Animal
 
     // The age at which a antelope can start to breed.
     private static final int BREEDING_AGE = 5;
-    // The age to which a antelope can live.
-    private static final int MAX_AGE = 70;
     // The likelihood of a antelope breeding.
-    private static double BREEDING_PROBABILITY = 0.05;
+    private static double BREEDING_PROBABILITY;
     // The maximum number of births.
     private static final int MAX_LITTER_SIZE = 3;
     // A shared random number generator to control breeding.
     private static final Random rand = Randomizer.getRandom();
     // Initial plant food value.
-    private static final int PLANT_FOOD_VALUE = 10;
+    private static final int PLANT_FOOD_VALUE = 12;
     
     
     // Individual characteristics (instance fields).
@@ -33,6 +31,9 @@ public class Antelope extends Animal
     private int age;
     // Initial antelope food level.
     private int foodLevel;
+    // The age to which a antelope can live.
+    private int MAX_AGE = ageMethod();
+    
 
     /**
      * Create a new antelope. A antelope may be created with age
@@ -46,10 +47,14 @@ public class Antelope extends Animal
     public Antelope(boolean randomAge, Field field, Location location, boolean isNocturnal)
     {
         super(field, location, isNocturnal);
-        age = 0;
+        
         if(randomAge) {
             age = rand.nextInt(MAX_AGE);
             foodLevel = rand.nextInt(PLANT_FOOD_VALUE);
+        }
+        else {
+            age = 0;
+            foodLevel = PLANT_FOOD_VALUE;
         }
     }
     
@@ -189,6 +194,21 @@ public class Antelope extends Animal
     }
     
     /**
+     * Change the max age of the antelope depending on whether or not is it diseased.
+     */
+    private int ageMethod()
+    {
+        if(getIsDiseased()) {
+            // Max age if diseased.
+            MAX_AGE = 25;
+        }
+        else {
+            MAX_AGE = 45;
+        }
+        return MAX_AGE;
+    }
+        
+    /**
      * Change the breeding probability of this antelope based on the current weather conditions.
      */
     static public void weatherInfluence(String currentWeather)
@@ -196,16 +216,16 @@ public class Antelope extends Animal
         String weatherNow = currentWeather;
         switch(weatherNow) {
             case "Sunny":
-                BREEDING_PROBABILITY = 0.1;
+                BREEDING_PROBABILITY = 0.17;
                 break;
             case "Raining":
-                BREEDING_PROBABILITY = 0.3;
+                BREEDING_PROBABILITY = 0.15;
                 break;
             case "Drought":
-                BREEDING_PROBABILITY = 0.3;
+                BREEDING_PROBABILITY = 0.06;
                 break;
             case "Clear":
-                BREEDING_PROBABILITY = 0.3;
+                BREEDING_PROBABILITY = 0.08;
                 break;
             
                 
