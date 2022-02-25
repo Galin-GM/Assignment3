@@ -18,7 +18,7 @@ public class Antelope extends Animal
     // The likelihood of a antelope breeding.
     private static double BREEDING_PROBABILITY;
     // The maximum number of births.
-    private static final int MAX_LITTER_SIZE = 3;
+    private static final int MAX_LITTER_SIZE = 4;
     // A shared random number generator to control breeding.
     private static final Random rand = Randomizer.getRandom();
     // Initial plant food value.
@@ -183,6 +183,46 @@ public class Antelope extends Animal
     }
     
     /**
+     * Look at surrounding antelopes and there is a possibility that 
+     * the disease spreads.
+     */
+    private void spreadDisease()
+    {
+        Field field = getField();
+        List<Location> adjacent = field.adjacentLocations(getLocation());
+        Iterator<Location> it = adjacent.iterator();
+        
+        double probability = 0.05;
+        
+        
+        while(it.hasNext()) {
+            Object animal = field.getObjectAt(getLocation());
+            Location where = it.next();
+            Object nextAnimal = field.getObjectAt(where);
+            
+            if(nextAnimal instanceof Antelope) {
+                Antelope antelope = (Antelope) animal;
+                Antelope nextAntelope = (Antelope) nextAnimal;
+                
+                if(antelope.getIsDiseased() && !nextAntelope.getIsDiseased()) {
+                    if(rand.nextDouble() <= probability) {
+                        nextAntelope.setIsDiseased();
+                        nextAntelope.updateDiseasedMaxAge();
+                    }
+                }
+            }
+        }
+    }
+    
+    /**
+     * Update the max age.
+     */
+    private void updateDiseasedMaxAge() 
+    {
+        MAX_AGE = 18;
+    }
+    
+    /**
      * Make this antelope more hungry. This could result in the antelope's death.
      */
     private void incrementHunger()
@@ -200,10 +240,10 @@ public class Antelope extends Animal
     {
         if(getIsDiseased()) {
             // Max age if diseased.
-            MAX_AGE = 25;
+            MAX_AGE = 18;
         }
         else {
-            MAX_AGE = 40;
+            MAX_AGE = 24;
         }
         return MAX_AGE;
     }
@@ -216,18 +256,11 @@ public class Antelope extends Animal
         String weatherNow = currentWeather;
         switch(weatherNow) {
             case "Sunny":
-                BREEDING_PROBABILITY = 0.19;
+                BREEDING_PROBABILITY = 0.22;
                 break;
             case "Raining":
-                BREEDING_PROBABILITY = 0.17;
-                break;
-            case "Drought":
-                BREEDING_PROBABILITY = 0.07;
-                break;
-            case "Clear":
-                BREEDING_PROBABILITY = 0.08;
-                break;
-            
+                BREEDING_PROBABILITY = 0.12;
+                break;            
                 
             default: BREEDING_PROBABILITY = 0.05;
         }

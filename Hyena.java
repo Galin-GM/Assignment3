@@ -14,15 +14,15 @@ public class Hyena extends Animal
     // Characteristics shared by all hyena (class variables).
     
     // The age at which a hyena can start to breed.
-    private static final int BREEDING_AGE = 15;
+    private static final int BREEDING_AGE = 10;
     // The likelihood of a hyena breeding.
-    private static double BREEDING_PROBABILITY = 0.08;
+    private static double BREEDING_PROBABILITY;
     // The maximum number of births.
     private static final int MAX_LITTER_SIZE = 2;
     // The food value of a single rabbit. In effect, this is the
     // number of steps a hyena can go before it has to eat again.
-    private static final int ANTELOPE_FOOD_VALUE = 25;
-    private static final int BUFFALO_FOOD_VALUE = 25;
+    private static final int ANTELOPE_FOOD_VALUE = 32;
+    private static final int BUFFALO_FOOD_VALUE = 32;
     // A shared random number generator to control breeding.
     private static final Random rand = Randomizer.getRandom();
     
@@ -142,6 +142,46 @@ public class Hyena extends Animal
     }
     
     /**
+     * Look at surrounding antelopes and there is a possibility that 
+     * the disease spreads.
+     */
+    private void spreadDisease()
+    {
+        Field field = getField();
+        List<Location> adjacent = field.adjacentLocations(getLocation());
+        Iterator<Location> it = adjacent.iterator();
+        
+        double probability = 0.05;
+        
+        
+        while(it.hasNext()) {
+            Object animal = field.getObjectAt(getLocation());
+            Location where = it.next();
+            Object nextAnimal = field.getObjectAt(where);
+            
+            if(nextAnimal instanceof Hyena) {
+                Hyena hyena = (Hyena) animal;
+                Hyena nextHyena = (Hyena) nextAnimal;
+                
+                if(hyena.getIsDiseased() && !nextHyena.getIsDiseased()) {
+                    if(rand.nextDouble() <= probability) {
+                        nextHyena.setIsDiseased();
+                        nextHyena.updateDiseasedMaxAge();
+                    }
+                }
+            }
+        }
+    }
+    
+    /**
+     * Update the max age.
+     */
+    private void updateDiseasedMaxAge() 
+    {
+        MAX_AGE = 40;
+    }
+    
+    /**
      * Check whether or not this hyena is to give birth at this step.
      * New births will be made into free adjacent locations.
      * @param newHyenas A list to return newly born hyena.
@@ -204,11 +244,11 @@ public class Hyena extends Animal
     {
         if(getIsDiseased()) {
             // Max age if diseased.
-            MAX_AGE = 60;
+            MAX_AGE = 30;
         }
         else {
             // Max age if not diseased.
-            MAX_AGE = 100;
+            MAX_AGE = 48;
         }
         return MAX_AGE;
     }
@@ -220,19 +260,12 @@ public class Hyena extends Animal
     {
         String weatherNow = currentWeather;
         switch(weatherNow) {
-            case "Sunny":
-                BREEDING_PROBABILITY = 0.1;
-                break;
-            case "Raining":
-                BREEDING_PROBABILITY = 0.07;
-                break;
-            case "Drought":
-                BREEDING_PROBABILITY = 0.03;
-                break;
             case "Clear":
                 BREEDING_PROBABILITY = 0.1;
                 break;
-            
+            case "Raining":
+                BREEDING_PROBABILITY = 0.1;
+                break;
                 
             default: BREEDING_PROBABILITY = 0.05;
         }

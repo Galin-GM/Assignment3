@@ -14,16 +14,16 @@ public class Tiger extends Animal
     // Characteristics shared by all tigers (class variables).
     
     // The age at which a tiger can start to breed.
-    private static final int BREEDING_AGE = 10;
+    private static final int BREEDING_AGE = 12;
     
     // The likelihood of a tiger breeding.
     private static double BREEDING_PROBABILITY;
     // The maximum number of births.
-    private static final int MAX_LITTER_SIZE = 3;
+    private static final int MAX_LITTER_SIZE = 2;
     // The food value of a single antelope/buffalo. In effect, this is the
     // number of steps a tiger can go before it has to eat again.
-    private static final int ANTELOPE_FOOD_VALUE = 30;
-    private static final int BUFFALO_FOOD_VALUE = 30;
+    private static final int ANTELOPE_FOOD_VALUE = 24;
+    private static final int BUFFALO_FOOD_VALUE = 24;
 
     // A shared random number generator to control breeding.
     private static final Random rand = Randomizer.getRandom();
@@ -112,11 +112,13 @@ public class Tiger extends Animal
     
     /**
      * Look for antelopes/buffalos adjacent to the current location.
+     * Can only eat under a certain amount of hunger.
      * Only the first live antelope/buffalo is eaten.
      * @return Where food was found, or null if it wasn't.
      */
     private Location findFood()
     {
+        if(foodLevel < (ANTELOPE_FOOD_VALUE * 0.4)) {
         Field field = getField();
         List<Location> adjacent = field.adjacentLocations(getLocation());
         Iterator<Location> it = adjacent.iterator();
@@ -140,7 +142,48 @@ public class Tiger extends Animal
                 }
             }            
         }
+        }
         return null;
+    }
+    
+    /**
+     * Look at surrounding tigers and there is a possibility that 
+     * the disease spreads.
+     */
+    private void spreadDisease()
+    {
+        Field field = getField();
+        List<Location> adjacent = field.adjacentLocations(getLocation());
+        Iterator<Location> it = adjacent.iterator();
+        
+        double probability = 0.05;
+        
+        
+        while(it.hasNext()) {
+            Object animal = field.getObjectAt(getLocation());
+            Location where = it.next();
+            Object nextAnimal = field.getObjectAt(where);
+            
+            if(nextAnimal instanceof Tiger) {
+                Tiger tiger = (Tiger) animal;
+                Tiger nextTiger = (Tiger) nextAnimal;
+                
+                if(tiger.getIsDiseased() && !nextTiger.getIsDiseased()) {
+                    if(rand.nextDouble() <= probability) {
+                        nextTiger.setIsDiseased();
+                        nextTiger.updateDiseasedMaxAge();
+                    }
+                }
+            }
+        }
+    }
+    
+    /**
+     * Update the max age.
+     */
+    private void updateDiseasedMaxAge() 
+    {
+        MAX_AGE = 70;
     }
     
     /**
@@ -206,11 +249,11 @@ public class Tiger extends Animal
     {
         if(getIsDiseased()) {
             // Max age if diseased.
-            MAX_AGE = 60;
+            MAX_AGE = 40;
         }
         else {
             // Max age if not diseased.
-            MAX_AGE = 100;
+            MAX_AGE = 60;
         }
         return MAX_AGE;
     }
@@ -224,18 +267,11 @@ public class Tiger extends Animal
         String weatherNow = currentWeather;
         switch(weatherNow) {
             case "Sunny":
-                BREEDING_PROBABILITY = 0.13;
+                BREEDING_PROBABILITY = 0.1;
                 break;
             case "Raining":
-                BREEDING_PROBABILITY = 0.12;
-                break;
-            case "Drought":
-                BREEDING_PROBABILITY = 0.08;
-                break;
-            case "Clear":
-                BREEDING_PROBABILITY = 0.08;
-                break;
-            
+                BREEDING_PROBABILITY = 0.2;
+                break;           
                 
             default: BREEDING_PROBABILITY = 0.05;
         }

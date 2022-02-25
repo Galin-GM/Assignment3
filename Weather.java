@@ -32,14 +32,12 @@ public class Weather
         // Add all types of day time weathers to the array list.
         dayTypesOfWeather.add("Sunny");
         dayTypesOfWeather.add("Raining");
-        dayTypesOfWeather.add("Drought");
         
         // Create ArrayList object for night time weathers.
         nightTypesOfWeather = new ArrayList<>();
         // Add all types of night time weathers to the array list.
         nightTypesOfWeather.add("Clear");
         nightTypesOfWeather.add("Raining");
-        nightTypesOfWeather.add("Drought");
         
         // Set the weather at which the simulation starts.
         currentWeather = "Sunny";

@@ -18,7 +18,7 @@ public class Buffalo extends Animal
     // The likelihood of a buffalo breeding.
     private static double BREEDING_PROBABILITY;
     // The maximum number of births.
-    private static final int MAX_LITTER_SIZE = 3;
+    private static final int MAX_LITTER_SIZE = 5;
     // A shared random number generator to control breeding.
     private static final Random rand = Randomizer.getRandom();
     
@@ -96,6 +96,46 @@ public class Buffalo extends Animal
         if(age > MAX_AGE) {
             setDead();
         }
+    }
+    
+    /**
+     * Look at surrounding antelopes and there is a possibility that 
+     * the disease spreads.
+     */
+    private void spreadDisease()
+    {
+        Field field = getField();
+        List<Location> adjacent = field.adjacentLocations(getLocation());
+        Iterator<Location> it = adjacent.iterator();
+        
+        double probability = 0.05;
+        
+        
+        while(it.hasNext()) {
+            Object animal = field.getObjectAt(getLocation());
+            Location where = it.next();
+            Object nextAnimal = field.getObjectAt(where);
+            
+            if(nextAnimal instanceof Buffalo) {
+                Buffalo buffalo = (Buffalo) animal;
+                Buffalo nextBuffalo = (Buffalo) nextAnimal;
+                
+                if(buffalo.getIsDiseased() && !nextBuffalo.getIsDiseased()) {
+                    if(rand.nextDouble() <= probability) {
+                        nextBuffalo.setIsDiseased();
+                        nextBuffalo.updateDiseasedMaxAge();
+                    }
+                }
+            }
+        }
+    }
+    
+    /**
+     * Update the max age.
+     */
+    private void updateDiseasedMaxAge() 
+    {
+        MAX_AGE = 18;
     }
     
     /**
@@ -193,11 +233,11 @@ public class Buffalo extends Animal
     {
         if(getIsDiseased()) {
             // Max age if diseased.
-            MAX_AGE = 30;
+            MAX_AGE = 18;
         }
         else {
             // Max age if not diseased.
-            MAX_AGE = 45;
+            MAX_AGE = 24;
         }
         return MAX_AGE;
     }
@@ -210,18 +250,11 @@ public class Buffalo extends Animal
         String weatherNow = currentWeather;
         switch(weatherNow) {
             case "Sunny":
-                BREEDING_PROBABILITY = 0.16;
+                BREEDING_PROBABILITY = 0.18;
                 break;
             case "Raining":
-                BREEDING_PROBABILITY = 0.12;
-                break;
-            case "Drought":
-                BREEDING_PROBABILITY = 0.08;
-                break;
-            case "Clear":
-                BREEDING_PROBABILITY = 0.08;
-                break;
-            
+                BREEDING_PROBABILITY = 0.1;
+                break;            
                 
             default: BREEDING_PROBABILITY = 0.05;
         }

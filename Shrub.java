@@ -12,9 +12,9 @@ public class Shrub extends Plant
 {
     // Characteristics shared by all antelopes (class variables).
     private static double NEW_SHRUB_PROBABILITY;    
-    private static final int MAX_AGE = 16;
+    private static final int MAX_AGE = 12;
     private static final int SPAWNING_AGE = 9;
-    private static final int MAX_LITTER_SIZE = 6;
+    private static final int MAX_LITTER_SIZE = 4;
     private static final Random rand = Randomizer.getRandom();
 
     // Individual characteristics (instance fields).
@@ -118,18 +118,11 @@ public class Shrub extends Plant
         String weatherNow = currentWeather;
         switch(weatherNow) {
             case "Sunny":
-                NEW_SHRUB_PROBABILITY = 0.12;
+                NEW_SHRUB_PROBABILITY = 0.2;
                 break;
             case "Raining":
-                NEW_SHRUB_PROBABILITY = 0.13;
-                break;
-            case "Drought":
-                NEW_SHRUB_PROBABILITY = 0.06;
-                break;
-            case "Clear":
-                NEW_SHRUB_PROBABILITY = 0.1;
-                break;
-            
+                NEW_SHRUB_PROBABILITY = 0.2;
+                break;            
                 
             default: NEW_SHRUB_PROBABILITY = 0.05;
         }

@@ -22,17 +22,18 @@ public class Simulator
     private static final int DEFAULT_DEPTH = 80;
     
     // The probability that a lion will be created in any given grid position.
-    private static final double LION_CREATION_PROBABILITY = 0.02;
+    private static final double LION_CREATION_PROBABILITY = 0.02*0.75;
     // The probability that a antelope will be created in any given grid position.
-    private static final double ANTELOPE_CREATION_PROBABILITY = 0.07;
+    private static final double ANTELOPE_CREATION_PROBABILITY = 0.06*0.75;
     // The probability that a buffalo will be created in any given grid position.
-    private static final double BUFFALO_CREATION_PROBABILITY = 0.09; 
+    private static final double BUFFALO_CREATION_PROBABILITY = 0.07*0.75; 
     // The probability that a tiger will be created in any given grid position.
-    private static final double TIGER_CREATION_PROBABILITY = 0.01;
+    private static final double TIGER_CREATION_PROBABILITY = 0.02*0.75;
     // The probability that a hyena will be created in any given grid position.
-    private static final double HYENA_CREATION_PROBABILITY = 0.01;
+    private static final double HYENA_CREATION_PROBABILITY = 0.03*0.75;
     // The probability that a shrub will be created in any given grid position.
-    private static final double SHRUB_CREATION_PROBABILITY = 0.06;
+    private static final double SHRUB_CREATION_PROBABILITY = 0.1*0.75;
+
 
 
     // List of animals in the field.
@@ -115,7 +116,7 @@ public class Simulator
     {
         for(int step = 1; step <= numSteps && view.isViable(field); step++) {
             simulateOneStep();
-            delay(100);   // uncomment this to run more slowly
+            //delay(100);   // uncomment this to run more slowly
         }
     }
     
@@ -196,11 +197,11 @@ public class Simulator
                     Tiger tiger = new Tiger(true, field, location, false);
                     species.add(tiger);
                 } 
-                // else if(rand.nextDouble() <= HYENA_CREATION_PROBABILITY) {
-                    // Location location = new Location(row, col);
-                    // Hyena hyena = new Hyena(true, field, location, true);
-                    // species.add(hyena);
-                // }
+                else if(rand.nextDouble() <= HYENA_CREATION_PROBABILITY) {
+                    Location location = new Location(row, col);
+                    Hyena hyena = new Hyena(true, field, location, true);
+                    species.add(hyena);
+                }
                 else if(rand.nextDouble() <= SHRUB_CREATION_PROBABILITY) {
                     Location location = new Location(row, col);
                     Shrub shrub = new Shrub(true, field, location, false);

@@ -65,7 +65,7 @@ public abstract class Animal extends Species
     
     protected boolean generateIsDiseased()
     {
-        double probability = 0.10;
+        double probability = 0.1;
         
         if(rand.nextDouble() <= probability) {
             isDiseased = true;
@@ -75,4 +75,10 @@ public abstract class Animal extends Species
         }
         return isDiseased;
     }
+    
+    protected void setIsDiseased()
+    {
+        isDiseased = true;
+    }
+    
 }

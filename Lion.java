@@ -14,7 +14,7 @@ public class Lion extends Animal
     // Characteristics shared by all lions (class variables).
     
     // The age at which a lion can start to breed.
-    private static final int BREEDING_AGE = 10;
+    private static final int BREEDING_AGE = 12;
     
     // The likelihood of a lion breeding.
     private static double BREEDING_PROBABILITY;
@@ -22,8 +22,8 @@ public class Lion extends Animal
     private static final int MAX_LITTER_SIZE = 2;
     // The food value of a single antelope/buffalo. In effect, this is the
     // number of steps a lion can go before it has to eat again.
-    private static final int ANTELOPE_FOOD_VALUE = 21;
-    private static final int BUFFALO_FOOD_VALUE = 21;
+    private static final int ANTELOPE_FOOD_VALUE = 24;
+    private static final int BUFFALO_FOOD_VALUE = 24;
 
     // A shared random number generator to control breeding.
     private static final Random rand = Randomizer.getRandom();
@@ -70,12 +70,13 @@ public class Lion extends Animal
         incrementAge();
         incrementHunger();
         if(isAlive()) {
+            spreadDisease();
             giveBirth(newLions);            
             // Move towards a source of food if found.
             Location newLocation = findFood();
             if(newLocation == null) { 
                 // No food found - try to move to a free location.
-                newLocation = getField().freeAdjacentLocation(getLocation());
+                newLocation = getField().freeAdjacentLocation(getLocation());                
             }
             // See if it was possible to move.
             if(newLocation != null) {
@@ -112,11 +113,13 @@ public class Lion extends Animal
     
     /**
      * Look for antelopes/buffalos adjacent to the current location.
+     * Can only eat under a certain amount of hunger.
      * Only the first live antelope/buffalo is eaten.
      * @return Where food was found, or null if it wasn't.
      */
     private Location findFood()
     {
+        if(foodLevel < (ANTELOPE_FOOD_VALUE * 0.3)) {
         Field field = getField();
         List<Location> adjacent = field.adjacentLocations(getLocation());
         Iterator<Location> it = adjacent.iterator();
@@ -140,7 +143,40 @@ public class Lion extends Animal
                 }
             }
         }
+        }
         return null;
+    }
+    
+    /**
+     * Look at surrounding lions and there is a possibility that 
+     * the disease spreads.
+     */
+    private void spreadDisease()
+    {
+        Field field = getField();
+        List<Location> adjacent = field.adjacentLocations(getLocation());
+        Iterator<Location> it = adjacent.iterator();
+        
+        double probability = 0.05;
+        
+        
+        while(it.hasNext()) {
+            Object animal = field.getObjectAt(getLocation());
+            Location where = it.next();
+            Object nextAnimal = field.getObjectAt(where);
+            
+            if(nextAnimal instanceof Lion) {
+                Lion lion = (Lion) animal;
+                Lion nextLion = (Lion) nextAnimal;
+                
+                if(lion.getIsDiseased() && !nextLion.getIsDiseased()) {
+                    if(rand.nextDouble() <= probability) {
+                        nextLion.setIsDiseased();
+                        nextLion.updateDiseasedMaxAge();
+                    }
+                }
+            }
+        }
     }
     
     /**
@@ -206,13 +242,21 @@ public class Lion extends Animal
     {
         if(getIsDiseased()) {
             // Max age if diseased.
-            MAX_AGE = 60;
+            MAX_AGE = 40;
         }
         else {
             // Max age if not diseased.
-            MAX_AGE = 100;
+            MAX_AGE = 60;
         }
         return MAX_AGE;
+    }
+    
+    /**
+     * Update the max age.
+     */
+    private void updateDiseasedMaxAge() 
+    {
+        MAX_AGE = 40;
     }
     
     /**
@@ -223,18 +267,11 @@ public class Lion extends Animal
         String weatherNow = currentWeather;
         switch(weatherNow) {
             case "Sunny":
-                BREEDING_PROBABILITY = 0.18;
+                BREEDING_PROBABILITY = 0.1;
                 break;
             case "Raining":
-                BREEDING_PROBABILITY = 0.16;
-                break;
-            case "Drought":
-                BREEDING_PROBABILITY = 0.09;
-                break;
-            case "Clear":
-                BREEDING_PROBABILITY = 0.08;
-                break;
-            
+                BREEDING_PROBABILITY = 0.2;
+                break;            
                 
             default: BREEDING_PROBABILITY = 0.05;
         }
