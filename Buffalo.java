@@ -197,7 +197,7 @@ public class Buffalo extends Animal
         }
         else {
             // Max age if not diseased.
-            MAX_AGE = 55;
+            MAX_AGE = 45;
         }
         return MAX_AGE;
     }
@@ -210,7 +210,7 @@ public class Buffalo extends Animal
         String weatherNow = currentWeather;
         switch(weatherNow) {
             case "Sunny":
-                BREEDING_PROBABILITY = 0.14;
+                BREEDING_PROBABILITY = 0.16;
                 break;
             case "Raining":
                 BREEDING_PROBABILITY = 0.12;

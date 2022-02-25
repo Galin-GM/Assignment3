@@ -19,7 +19,7 @@ public class Lion extends Animal
     // The likelihood of a lion breeding.
     private static double BREEDING_PROBABILITY;
     // The maximum number of births.
-    private static final int MAX_LITTER_SIZE = 4;
+    private static final int MAX_LITTER_SIZE = 2;
     // The food value of a single antelope/buffalo. In effect, this is the
     // number of steps a lion can go before it has to eat again.
     private static final int ANTELOPE_FOOD_VALUE = 21;
@@ -223,13 +223,13 @@ public class Lion extends Animal
         String weatherNow = currentWeather;
         switch(weatherNow) {
             case "Sunny":
-                BREEDING_PROBABILITY = 0.15;
+                BREEDING_PROBABILITY = 0.18;
                 break;
             case "Raining":
-                BREEDING_PROBABILITY = 0.13;
+                BREEDING_PROBABILITY = 0.16;
                 break;
             case "Drought":
-                BREEDING_PROBABILITY = 0.04;
+                BREEDING_PROBABILITY = 0.09;
                 break;
             case "Clear":
                 BREEDING_PROBABILITY = 0.08;

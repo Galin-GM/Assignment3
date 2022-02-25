@@ -203,7 +203,7 @@ public class Antelope extends Animal
             MAX_AGE = 25;
         }
         else {
-            MAX_AGE = 45;
+            MAX_AGE = 40;
         }
         return MAX_AGE;
     }
@@ -216,13 +216,13 @@ public class Antelope extends Animal
         String weatherNow = currentWeather;
         switch(weatherNow) {
             case "Sunny":
-                BREEDING_PROBABILITY = 0.17;
+                BREEDING_PROBABILITY = 0.19;
                 break;
             case "Raining":
-                BREEDING_PROBABILITY = 0.15;
+                BREEDING_PROBABILITY = 0.17;
                 break;
             case "Drought":
-                BREEDING_PROBABILITY = 0.06;
+                BREEDING_PROBABILITY = 0.07;
                 break;
             case "Clear":
                 BREEDING_PROBABILITY = 0.08;

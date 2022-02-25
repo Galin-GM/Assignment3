@@ -14,16 +14,16 @@ public class Tiger extends Animal
     // Characteristics shared by all tigers (class variables).
     
     // The age at which a tiger can start to breed.
-    private static final int BREEDING_AGE = 15;
+    private static final int BREEDING_AGE = 10;
     
     // The likelihood of a tiger breeding.
     private static double BREEDING_PROBABILITY;
     // The maximum number of births.
-    private static final int MAX_LITTER_SIZE = 1;
+    private static final int MAX_LITTER_SIZE = 3;
     // The food value of a single antelope/buffalo. In effect, this is the
     // number of steps a tiger can go before it has to eat again.
-    private static final int ANTELOPE_FOOD_VALUE = 18;
-    private static final int BUFFALO_FOOD_VALUE = 18;
+    private static final int ANTELOPE_FOOD_VALUE = 30;
+    private static final int BUFFALO_FOOD_VALUE = 30;
 
     // A shared random number generator to control breeding.
     private static final Random rand = Randomizer.getRandom();
@@ -123,15 +123,7 @@ public class Tiger extends Animal
         while(it.hasNext()) {
             Location where = it.next();
             Object animal = field.getObjectAt(where);
-            if(animal instanceof Antelope){
-                Antelope antelope = (Antelope) animal;
-                if(antelope.isAlive()) { 
-                    antelope.setDead();
-                    foodLevel = ANTELOPE_FOOD_VALUE;
-                    return where;
-                }
-            }
-            else if(animal instanceof Buffalo) {
+            if(animal instanceof Buffalo) {
                 Buffalo buffalo = (Buffalo) animal;
                 if(buffalo.isAlive()) {
                     buffalo.setDead();
@@ -139,6 +131,14 @@ public class Tiger extends Animal
                     return where;
                 }
             }
+            else if(animal instanceof Antelope){
+                Antelope antelope = (Antelope) animal;
+                if(antelope.isAlive()) { 
+                    antelope.setDead();
+                    foodLevel = ANTELOPE_FOOD_VALUE;
+                    return where;
+                }
+            }            
         }
         return null;
     }
@@ -224,13 +224,13 @@ public class Tiger extends Animal
         String weatherNow = currentWeather;
         switch(weatherNow) {
             case "Sunny":
-                BREEDING_PROBABILITY = 0.08;
+                BREEDING_PROBABILITY = 0.13;
                 break;
             case "Raining":
-                BREEDING_PROBABILITY = 0.05;
+                BREEDING_PROBABILITY = 0.12;
                 break;
             case "Drought":
-                BREEDING_PROBABILITY = 0.02;
+                BREEDING_PROBABILITY = 0.08;
                 break;
             case "Clear":
                 BREEDING_PROBABILITY = 0.08;

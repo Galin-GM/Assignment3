@@ -22,17 +22,17 @@ public class Simulator
     private static final int DEFAULT_DEPTH = 80;
     
     // The probability that a lion will be created in any given grid position.
-    private static final double LION_CREATION_PROBABILITY = 0.01;
+    private static final double LION_CREATION_PROBABILITY = 0.02;
     // The probability that a antelope will be created in any given grid position.
-    private static final double ANTELOPE_CREATION_PROBABILITY = 0.05;
+    private static final double ANTELOPE_CREATION_PROBABILITY = 0.07;
     // The probability that a buffalo will be created in any given grid position.
-    private static final double BUFFALO_CREATION_PROBABILITY = 0.07; 
+    private static final double BUFFALO_CREATION_PROBABILITY = 0.09; 
     // The probability that a tiger will be created in any given grid position.
     private static final double TIGER_CREATION_PROBABILITY = 0.01;
     // The probability that a hyena will be created in any given grid position.
     private static final double HYENA_CREATION_PROBABILITY = 0.01;
     // The probability that a shrub will be created in any given grid position.
-    private static final double SHRUB_CREATION_PROBABILITY = 0.05;
+    private static final double SHRUB_CREATION_PROBABILITY = 0.06;
 
 
     // List of animals in the field.
@@ -191,11 +191,11 @@ public class Simulator
                     Buffalo buffalo = new Buffalo(true, field, location, false);
                     species.add(buffalo);
                 }
-                // else if(rand.nextDouble() <= TIGER_CREATION_PROBABILITY) {
-                    // Location location = new Location(row, col);
-                    // Tiger tiger = new Tiger(true, field, location, false);
-                    // species.add(tiger);
-                // } 
+                else if(rand.nextDouble() <= TIGER_CREATION_PROBABILITY) {
+                    Location location = new Location(row, col);
+                    Tiger tiger = new Tiger(true, field, location, false);
+                    species.add(tiger);
+                } 
                 // else if(rand.nextDouble() <= HYENA_CREATION_PROBABILITY) {
                     // Location location = new Location(row, col);
                     // Hyena hyena = new Hyena(true, field, location, true);
