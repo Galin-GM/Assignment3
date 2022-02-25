@@ -23,7 +23,7 @@ public class Lion extends Animal
     // The food value of a single antelope/buffalo. In effect, this is the
     // number of steps a lion can go before it has to eat again.
     private static final int ANTELOPE_FOOD_VALUE = 24;
-    private static final int BUFFALO_FOOD_VALUE = 24;
+    private static final int BUFFALO_FOOD_VALUE = 12;
 
     // A shared random number generator to control breeding.
     private static final Random rand = Randomizer.getRandom();
@@ -119,7 +119,7 @@ public class Lion extends Animal
      */
     private Location findFood()
     {
-        if(foodLevel < (ANTELOPE_FOOD_VALUE * 0.3)) {
+        if(foodLevel < (ANTELOPE_FOOD_VALUE * 0.7)) {
         Field field = getField();
         List<Location> adjacent = field.adjacentLocations(getLocation());
         Iterator<Location> it = adjacent.iterator();
@@ -242,11 +242,11 @@ public class Lion extends Animal
     {
         if(getIsDiseased()) {
             // Max age if diseased.
-            MAX_AGE = 40;
+            MAX_AGE = 36;
         }
         else {
             // Max age if not diseased.
-            MAX_AGE = 60;
+            MAX_AGE = 48;
         }
         return MAX_AGE;
     }
@@ -256,7 +256,7 @@ public class Lion extends Animal
      */
     private void updateDiseasedMaxAge() 
     {
-        MAX_AGE = 40;
+        MAX_AGE = 36;
     }
     
     /**

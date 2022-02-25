@@ -22,7 +22,7 @@ public class Antelope extends Animal
     // A shared random number generator to control breeding.
     private static final Random rand = Randomizer.getRandom();
     // Initial plant food value.
-    private static final int PLANT_FOOD_VALUE = 12;
+    private static final int PLANT_FOOD_VALUE = 9;
     
     
     // Individual characteristics (instance fields).
@@ -219,7 +219,7 @@ public class Antelope extends Animal
      */
     private void updateDiseasedMaxAge() 
     {
-        MAX_AGE = 18;
+        MAX_AGE = 12;
     }
     
     /**
@@ -240,10 +240,10 @@ public class Antelope extends Animal
     {
         if(getIsDiseased()) {
             // Max age if diseased.
-            MAX_AGE = 18;
+            MAX_AGE = 12;
         }
         else {
-            MAX_AGE = 24;
+            MAX_AGE = 20;
         }
         return MAX_AGE;
     }

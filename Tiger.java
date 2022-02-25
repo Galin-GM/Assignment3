@@ -22,7 +22,7 @@ public class Tiger extends Animal
     private static final int MAX_LITTER_SIZE = 2;
     // The food value of a single antelope/buffalo. In effect, this is the
     // number of steps a tiger can go before it has to eat again.
-    private static final int ANTELOPE_FOOD_VALUE = 24;
+    private static final int ANTELOPE_FOOD_VALUE = 12;
     private static final int BUFFALO_FOOD_VALUE = 24;
 
     // A shared random number generator to control breeding.
@@ -50,11 +50,11 @@ public class Tiger extends Animal
         super(field, location, isNocturnal);
         if(randomAge) {
             age = rand.nextInt(MAX_AGE);
-            foodLevel = rand.nextInt(ANTELOPE_FOOD_VALUE);
+            foodLevel = rand.nextInt(BUFFALO_FOOD_VALUE);
         }
         else {
             age = 0;
-            foodLevel = ANTELOPE_FOOD_VALUE;
+            foodLevel = BUFFALO_FOOD_VALUE;
         }
     }
     
@@ -118,7 +118,7 @@ public class Tiger extends Animal
      */
     private Location findFood()
     {
-        if(foodLevel < (ANTELOPE_FOOD_VALUE * 0.4)) {
+        if(foodLevel < (ANTELOPE_FOOD_VALUE * 0.9)) {
         Field field = getField();
         List<Location> adjacent = field.adjacentLocations(getLocation());
         Iterator<Location> it = adjacent.iterator();

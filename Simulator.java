@@ -24,15 +24,15 @@ public class Simulator
     // The probability that a lion will be created in any given grid position.
     private static final double LION_CREATION_PROBABILITY = 0.02*0.75;
     // The probability that a antelope will be created in any given grid position.
-    private static final double ANTELOPE_CREATION_PROBABILITY = 0.06*0.75;
+    private static final double ANTELOPE_CREATION_PROBABILITY = 0.06*0.5;
     // The probability that a buffalo will be created in any given grid position.
-    private static final double BUFFALO_CREATION_PROBABILITY = 0.07*0.75; 
+    private static final double BUFFALO_CREATION_PROBABILITY = 0.07*0.5; 
     // The probability that a tiger will be created in any given grid position.
     private static final double TIGER_CREATION_PROBABILITY = 0.02*0.75;
     // The probability that a hyena will be created in any given grid position.
-    private static final double HYENA_CREATION_PROBABILITY = 0.03*0.75;
+    private static final double HYENA_CREATION_PROBABILITY = 0.03*0.5;
     // The probability that a shrub will be created in any given grid position.
-    private static final double SHRUB_CREATION_PROBABILITY = 0.1*0.75;
+    private static final double SHRUB_CREATION_PROBABILITY = 0.1*0.3;
 
 
 

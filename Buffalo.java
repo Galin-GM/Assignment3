@@ -23,7 +23,7 @@ public class Buffalo extends Animal
     private static final Random rand = Randomizer.getRandom();
     
     // Initial plant food value
-    private static final int PLANT_FOOD_VALUE = 12;
+    private static final int PLANT_FOOD_VALUE = 10;
  
     // Individual characteristics (instance fields).
     

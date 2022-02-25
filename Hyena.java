@@ -21,8 +21,8 @@ public class Hyena extends Animal
     private static final int MAX_LITTER_SIZE = 2;
     // The food value of a single rabbit. In effect, this is the
     // number of steps a hyena can go before it has to eat again.
-    private static final int ANTELOPE_FOOD_VALUE = 32;
-    private static final int BUFFALO_FOOD_VALUE = 32;
+    private static final int ANTELOPE_FOOD_VALUE = 28;
+    private static final int BUFFALO_FOOD_VALUE = 28;
     // A shared random number generator to control breeding.
     private static final Random rand = Randomizer.getRandom();
     
@@ -115,6 +115,7 @@ public class Hyena extends Animal
      */
     private Location findFood()
     {
+        if(foodLevel < (ANTELOPE_FOOD_VALUE * 0.9)) {
         Field field = getField();
         List<Location> adjacent = field.adjacentLocations(getLocation());
         Iterator<Location> it = adjacent.iterator();
@@ -138,6 +139,7 @@ public class Hyena extends Animal
                 }
             }
         }
+        }
         return null;
     }
     
@@ -151,7 +153,7 @@ public class Hyena extends Animal
         List<Location> adjacent = field.adjacentLocations(getLocation());
         Iterator<Location> it = adjacent.iterator();
         
-        double probability = 0.05;
+        double probability = 0.30;
         
         
         while(it.hasNext()) {
@@ -178,7 +180,7 @@ public class Hyena extends Animal
      */
     private void updateDiseasedMaxAge() 
     {
-        MAX_AGE = 40;
+        MAX_AGE = 24;
     }
     
     /**
@@ -244,11 +246,11 @@ public class Hyena extends Animal
     {
         if(getIsDiseased()) {
             // Max age if diseased.
-            MAX_AGE = 30;
+            MAX_AGE = 24;
         }
         else {
             // Max age if not diseased.
-            MAX_AGE = 48;
+            MAX_AGE = 36;
         }
         return MAX_AGE;
     }
@@ -261,10 +263,10 @@ public class Hyena extends Animal
         String weatherNow = currentWeather;
         switch(weatherNow) {
             case "Clear":
-                BREEDING_PROBABILITY = 0.1;
+                BREEDING_PROBABILITY = 0.09;
                 break;
             case "Raining":
-                BREEDING_PROBABILITY = 0.1;
+                BREEDING_PROBABILITY = 0.09;
                 break;
                 
             default: BREEDING_PROBABILITY = 0.05;
