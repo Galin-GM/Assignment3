@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.awt.Color;
 
-
 /**
  * A simple predator-prey simulator, based on a rectangular field
  * containing Lions, Tigers, Hyenas, Antelopes, Buffalos and Shrub.
@@ -15,12 +14,12 @@ import java.awt.Color;
 public class Simulator
 {
     // Constants representing configuration information for the simulation.
-    
+
     // The default width for the grid.
     private static final int DEFAULT_WIDTH = 320;
     // The default depth of the grid.
     private static final int DEFAULT_DEPTH = 240;
-    
+
     // The probability that a lion will be created in any given grid position.
     private static final double LION_CREATION_PROBABILITY = 0.02*0.75;
     // The probability that a antelope will be created in any given grid position.
@@ -34,8 +33,6 @@ public class Simulator
     // The probability that a shrub will be created in any given grid position.
     private static final double SHRUB_CREATION_PROBABILITY = 0.1*0.3;
 
-
-
     // List of animals in the field.
     private List<Species> species;
     // The current state of the field.
@@ -48,9 +45,7 @@ public class Simulator
     private TimeOfDay timeTracker;
     // A tracker for the weather.
     private Weather weatherTracker;
-    
 
-    
     /**
      * Construct a simulation field with default size.
      */
@@ -58,7 +53,7 @@ public class Simulator
     {
         this(DEFAULT_DEPTH, DEFAULT_WIDTH);
     }
-    
+
     /**
      * Create a simulation field with the given size.
      * @param depth Depth of the field. Must be greater than zero.
@@ -72,15 +67,15 @@ public class Simulator
             depth = DEFAULT_DEPTH;
             width = DEFAULT_WIDTH;
         }
-        
+
         species = new ArrayList<>();
         field = new Field(depth, width);
         timeTracker = new TimeOfDay();
         weatherTracker = new Weather();
-        
+
         // Create a view of the state of each location in the field.
         view = new SimulatorView(depth, width);
-        
+
         // Set prey colours.
         view.setColor(Antelope.class, Color.BLUE);
         view.setColor(Buffalo.class, Color.PINK);
@@ -89,15 +84,14 @@ public class Simulator
         view.setColor(Lion.class, Color.BLACK);
         view.setColor(Tiger.class, Color.ORANGE);
         view.setColor(Hyena.class, Color.RED);
-        
+
         // Set plant colours.
         view.setColor(Shrub.class, Color.GREEN);
 
-        
         // Setup a valid starting point.
         reset();
     }
-    
+
     /**
      * Run the simulation from its current state for a reasonably long period,
      * (4000 steps).
@@ -106,7 +100,7 @@ public class Simulator
     {
         simulate(4000);
     }
-    
+
     /**
      * Run the simulation from its current state for the given number of steps.
      * Stop before the given number of steps if it ceases to be viable.
@@ -119,7 +113,7 @@ public class Simulator
             //delay(100);   // uncomment this to run more slowly
         }
     }
-    
+
     /**
      * Run the simulation from its current state for a single step.
      * Iterate over the whole field updating the state of each
@@ -129,13 +123,14 @@ public class Simulator
     {
         step++;
         trackTime();
-        weatherEffectSpecie();
+        weatherEffectSpecie();      
+        naturalDisaster(0.001);
 
         // Provide space for newborn animals.
         List<Species> newSpecies = new ArrayList<>();        
         // Let all rabbits act.
         for(Iterator<Species> it = species.iterator(); it.hasNext(); ) {
-            
+
             Species specie = it.next();
             if(! specie.getIsNocturnal() & timeTracker.isItDay()) {
                 specie.act(newSpecies);
@@ -143,18 +138,18 @@ public class Simulator
             else if(specie.getIsNocturnal() & ! timeTracker.isItDay()) {
                 specie.act(newSpecies);
             }
-            
+
             if(! specie.isAlive()) {
                 it.remove();
             }
         }
-               
+
         // Add the newly born species to the main lists.
         species.addAll(newSpecies);
 
         view.showStatus(step, field, timeTracker.dayOrNight(), weatherTracker.getCurrentWeather());
     }
-        
+
     /**
      * Reset the simulation to a starting position.
      */
@@ -163,11 +158,11 @@ public class Simulator
         step = 0;
         species.clear();
         populate();
-        
+
         // Show the starting state in the view.
         view.showStatus(step, field, timeTracker.dayOrNight(), weatherTracker.getCurrentWeather());
     }
-    
+
     /**
      * Randomly populate the field with lions, tigers, hyenas, bufallos, antelopes and shrub.
      */
@@ -207,20 +202,19 @@ public class Simulator
                     Shrub shrub = new Shrub(true, field, location, false);
                     species.add(shrub);
                 }
-            
+
                 // else leave the location empty.
             }
         }
     }
-    
+
     private void trackTime() {
         if (step % 12 == 0) {
             timeTracker.flipTime();
             weatherTracker.setRandomWeather();
         }
     }
-    
-    
+
     /**
      * Pause for a given time.
      * @param millisec  The time to pause for, in milliseconds
@@ -234,7 +228,7 @@ public class Simulator
             // wake up
         }
     }
-    
+
     private void weatherEffectSpecie()
     {
         Lion.weatherInfluence(weatherTracker.getCurrentWeather());
@@ -243,5 +237,39 @@ public class Simulator
         Buffalo.weatherInfluence(weatherTracker.getCurrentWeather());
         Antelope.weatherInfluence(weatherTracker.getCurrentWeather());
         Shrub.weatherInfluence(weatherTracker.getCurrentWeather());
+    }
+
+    private void naturalDisaster(double probability)
+    {
+        Random rand = Randomizer.getRandom();
+
+        if(rand.nextDouble() <= probability) {
+            for(Iterator<Species> it = species.iterator(); it.hasNext(); ) {
+                Species specie = it.next();
+
+                if(specie instanceof Hyena || specie instanceof Lion || specie instanceof Tiger) {
+                    if(rand.nextDouble() <= 0.91) {
+                        specie.setDead();
+                    }
+                }
+
+                // else if(specie instanceof Shrub) {
+                // if(rand.nextDouble() <= 0.00) {
+                // specie.setDead();
+                // }
+                // }
+                else if (specie instanceof Antelope || specie instanceof Buffalo){
+                    if(rand.nextDouble() <= 0.4) {
+                        specie.setDead();
+                    }
+                }
+                else {
+                    if(rand.nextDouble() <= 0.1) {
+                        specie.setDead();
+                    }
+                }
+
+            }
+        }
     }
 }

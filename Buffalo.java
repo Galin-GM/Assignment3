@@ -250,7 +250,7 @@ public class Buffalo extends Animal
         String weatherNow = currentWeather;
         switch(weatherNow) {
             case "Sunny":
-                BREEDING_PROBABILITY = 0.18;
+                BREEDING_PROBABILITY = 0.17;
                 break;
             case "Raining":
                 BREEDING_PROBABILITY = 0.1;

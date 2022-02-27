@@ -14,7 +14,7 @@ public class Hyena extends Animal
     // Characteristics shared by all hyena (class variables).
     
     // The age at which a hyena can start to breed.
-    private static final int BREEDING_AGE = 10;
+    private static final int BREEDING_AGE = 12;
     // The likelihood of a hyena breeding.
     private static double BREEDING_PROBABILITY;
     // The maximum number of births.
