@@ -121,7 +121,7 @@ public class Shrub extends Plant
                 NEW_SHRUB_PROBABILITY = 0.15;
                 break;
             case "Raining":
-                NEW_SHRUB_PROBABILITY = 0.15;
+                NEW_SHRUB_PROBABILITY = 0.19;
                 break;            
                 
             default: NEW_SHRUB_PROBABILITY = 0.05;
