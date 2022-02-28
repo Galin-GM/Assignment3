@@ -12,7 +12,7 @@ import java.util.Random;
 public class Hyena extends Animal
 {
     // Characteristics shared by all hyena (class variables).
-    
+
     // The age at which a hyena can start to breed.
     private static final int BREEDING_AGE = 12;
     // The likelihood of a hyena breeding.
@@ -25,13 +25,13 @@ public class Hyena extends Animal
     private static final int BUFFALO_FOOD_VALUE = 28;
     // A shared random number generator to control breeding.
     private static final Random rand = Randomizer.getRandom();
-    
+
     // Individual characteristics (instance fields).
     // The hyena's age.
     private int age;
     // The hyena's food level, which is increased by eating rabbits.
     private int foodLevel;
-     // The age to which a hyena can live.
+    // The age to which a hyena can live.
     private int MAX_AGE = ageMethod();
 
     /**
@@ -55,7 +55,7 @@ public class Hyena extends Animal
             foodLevel = ANTELOPE_FOOD_VALUE;
         }
     }
-    
+
     /**
      * This is what the hyena does most of the time: it hunts for
      * rabbits. In the process, it might breed, die of hunger,
@@ -96,7 +96,7 @@ public class Hyena extends Animal
             setDead();
         }
     }
-    
+
     /**
      * Make this hyena more hungry. This could result in the hyena's death.
      */
@@ -107,7 +107,7 @@ public class Hyena extends Animal
             setDead();
         }
     }
-    
+
     /**
      * Look for rabbits adjacent to the current location.
      * Only the first live rabbit is eaten.
@@ -116,33 +116,33 @@ public class Hyena extends Animal
     private Location findFood()
     {
         if(foodLevel < (ANTELOPE_FOOD_VALUE * 0.9)) {
-        Field field = getField();
-        List<Location> adjacent = field.adjacentLocations(getLocation());
-        Iterator<Location> it = adjacent.iterator();
-        while(it.hasNext()) {
-            Location where = it.next();
-            Object animal = field.getObjectAt(where);
-            if(animal instanceof Antelope){
-                Antelope antelope = (Antelope) animal;
-                if(antelope.isAlive()) { 
-                    antelope.setDead();
-                    foodLevel = ANTELOPE_FOOD_VALUE;
-                    return where;
+            Field field = getField();
+            List<Location> adjacent = field.adjacentLocations(getLocation());
+            Iterator<Location> it = adjacent.iterator();
+            while(it.hasNext()) {
+                Location where = it.next();
+                Object animal = field.getObjectAt(where);
+                if(animal instanceof Antelope){
+                    Antelope antelope = (Antelope) animal;
+                    if(antelope.isAlive()) { 
+                        antelope.setDead();
+                        foodLevel = ANTELOPE_FOOD_VALUE;
+                        return where;
+                    }
+                }
+                else if(animal instanceof Buffalo) {
+                    Buffalo buffalo = (Buffalo) animal;
+                    if(buffalo.isAlive()) {
+                        buffalo.setDead();
+                        foodLevel = BUFFALO_FOOD_VALUE;
+                        return where;
+                    }
                 }
             }
-            else if(animal instanceof Buffalo) {
-                Buffalo buffalo = (Buffalo) animal;
-                if(buffalo.isAlive()) {
-                    buffalo.setDead();
-                    foodLevel = BUFFALO_FOOD_VALUE;
-                    return where;
-                }
-            }
-        }
         }
         return null;
     }
-    
+
     /**
      * Look at surrounding antelopes and there is a possibility that 
      * the disease spreads.
@@ -152,19 +152,18 @@ public class Hyena extends Animal
         Field field = getField();
         List<Location> adjacent = field.adjacentLocations(getLocation());
         Iterator<Location> it = adjacent.iterator();
-        
+
         double probability = 0.30;
-        
-        
+
         while(it.hasNext()) {
             Object animal = field.getObjectAt(getLocation());
             Location where = it.next();
             Object nextAnimal = field.getObjectAt(where);
-            
+
             if(nextAnimal instanceof Hyena) {
                 Hyena hyena = (Hyena) animal;
                 Hyena nextHyena = (Hyena) nextAnimal;
-                
+
                 if(hyena.getIsDiseased() && !nextHyena.getIsDiseased()) {
                     if(rand.nextDouble() <= probability) {
                         nextHyena.setIsDiseased();
@@ -174,7 +173,7 @@ public class Hyena extends Animal
             }
         }
     }
-    
+
     /**
      * Update the max age.
      */
@@ -182,7 +181,7 @@ public class Hyena extends Animal
     {
         MAX_AGE = 24;
     }
-    
+
     /**
      * Check whether or not this hyena is to give birth at this step.
      * New births will be made into free adjacent locations.
@@ -197,12 +196,12 @@ public class Hyena extends Animal
         int births = breed();
         List<Location> adjacent = field.adjacentLocations(getLocation());
         Iterator<Location> it = adjacent.iterator();
-        
+
         while(it.hasNext()) {
             Object animal = field.getObjectAt(getLocation());
             Location where = it.next();
             Object nextAnimal = field.getObjectAt(where);
-            
+
             if(nextAnimal instanceof Hyena) {
                 Hyena hyena = (Hyena) animal;
                 Hyena nextHyena = (Hyena) nextAnimal;
@@ -216,7 +215,7 @@ public class Hyena extends Animal
             }
         } 
     }
-        
+
     /**
      * Generate a number representing the number of births,
      * if it can breed.
@@ -238,7 +237,7 @@ public class Hyena extends Animal
     {
         return age >= BREEDING_AGE;
     }
-    
+
     /**
      * Change the max age of the hyena depending on whether or not is it diseased.
      */
@@ -254,7 +253,7 @@ public class Hyena extends Animal
         }
         return MAX_AGE;
     }
-    
+
     /**
      * Change the breeding probability of this hyena based on the current weather conditions.
      */
@@ -268,7 +267,7 @@ public class Hyena extends Animal
             case "Raining":
                 BREEDING_PROBABILITY = 0.09;
                 break;
-                
+
             default: BREEDING_PROBABILITY = 0.05;
         }
     }

@@ -11,12 +11,12 @@ public abstract class Animal extends Species
 {
     // The sex of the animal.
     private char sex;
-    
+
     // If the animal is diseased.
     private boolean isDiseased;
-    
+
     private static final Random rand = Randomizer.getRandom();
-    
+
     /**
      * Create a new animal at location in field.
      * 
@@ -30,7 +30,7 @@ public abstract class Animal extends Species
         this.sex = generateSex();
         this.isDiseased = generateIsDiseased();
     }
-        
+
     /**
      * Check whether this animal is a male or female.
      * @return 'f' is this animal is a female and 'm' if this animal is a male.
@@ -39,7 +39,7 @@ public abstract class Animal extends Species
     {
         return sex;
     }
-    
+
     /**
      * Randomly generate a sex for this animal.
      * @return the sex that is randomly generated for the animal.
@@ -57,16 +57,24 @@ public abstract class Animal extends Species
         }
         return sex;
     }
-    
+
+    /**
+     * Return whether the animal is diseased.
+     * @return true if the animal is diseased
+     */
     protected boolean getIsDiseased()
     {
         return isDiseased;
     }
-    
+
+    /**
+     * Generate whether the animal is diseased.
+     * @return true if the animal is diseased
+     */
     protected boolean generateIsDiseased()
     {
         double probability = 0.1;
-        
+
         if(rand.nextDouble() <= probability) {
             isDiseased = true;
         }
@@ -75,10 +83,13 @@ public abstract class Animal extends Species
         }
         return isDiseased;
     }
-    
+
+    /**
+     * Set the animal to diseased.
+     */
     protected void setIsDiseased()
     {
         isDiseased = true;
     }
-    
+
 }

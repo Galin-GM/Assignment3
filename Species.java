@@ -38,7 +38,7 @@ public abstract class Species
      * @param newAnimals A list to receive newly born speices
      */
     abstract public void act(List<Species> newSpecie);
-        
+
     /**
      * Check whether the specie is alive or not.
      * @return true if the specie is still alive.
@@ -48,14 +48,14 @@ public abstract class Species
         return alive;
     }
 
-         /**
+    /**
      * Check whether this animal is nocturnal or not.
      * @ return true if the animal is nocturnal.
      */
     protected boolean getIsNocturnal() {
         return isNocturnal;
     }
-        
+
     /**
      * Indicate that the animal is no longer alive.
      * It is removed from the field.
@@ -78,7 +78,7 @@ public abstract class Species
     {
         return location;
     }
-    
+
     /**
      * Place the animal at the new location in the given field.
      * @param newLocation The animal's new location.
@@ -91,7 +91,7 @@ public abstract class Species
         location = newLocation;
         field.place(this, newLocation);
     }
-    
+
     /**
      * Return the animal's field.
      * @return The animal's field.

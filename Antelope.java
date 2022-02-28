@@ -23,17 +23,14 @@ public class Antelope extends Animal
     private static final Random rand = Randomizer.getRandom();
     // Initial plant food value.
     private static final int PLANT_FOOD_VALUE = 9;
-    
-    
+
     // Individual characteristics (instance fields).
-    
     // The antelope's age.
     private int age;
     // Initial antelope food level.
     private int foodLevel;
     // The age to which a antelope can live.
     private int MAX_AGE = ageMethod();
-    
 
     /**
      * Create a new antelope. A antelope may be created with age
@@ -47,7 +44,7 @@ public class Antelope extends Animal
     public Antelope(boolean randomAge, Field field, Location location, boolean isNocturnal)
     {
         super(field, location, isNocturnal);
-        
+
         if(randomAge) {
             age = rand.nextInt(MAX_AGE);
             foodLevel = rand.nextInt(PLANT_FOOD_VALUE);
@@ -57,7 +54,7 @@ public class Antelope extends Animal
             foodLevel = PLANT_FOOD_VALUE;
         }
     }
-    
+
     /**
      * This is what the antelope does most of the time - it runs 
      * around. Sometimes it will breed or die of old age.
@@ -69,10 +66,10 @@ public class Antelope extends Animal
         incrementHunger();
         if(isAlive()) {
             giveBirth(newAntelopes); 
-            
+
             // Try to find food.
             Location newLocation = findFood();
-            
+
             if (newLocation == null) {
                 // If you cannot find food, try to move into a free location.
                 newLocation = getField().freeAdjacentLocation(getLocation());
@@ -98,7 +95,7 @@ public class Antelope extends Animal
             setDead();
         }
     }
-    
+
     /**
      * Check whether or not this antelopes is to give birth at this step.
      * New births will be made into free adjacent locations.
@@ -114,12 +111,12 @@ public class Antelope extends Animal
         List<Location> adjacent = field.adjacentLocations(getLocation());
         Iterator<Location> it = adjacent.iterator();
         int births = breed();
-        
+
         while(it.hasNext()) {
             Object animal = field.getObjectAt(getLocation());
             Location where = it.next();
             Object nextAnimal = field.getObjectAt(where);
-            
+
             if(nextAnimal instanceof Antelope) {
                 Antelope antelope = (Antelope) animal;
                 Antelope nextAntelope = (Antelope) nextAnimal;
@@ -133,7 +130,7 @@ public class Antelope extends Animal
             }
         }  
     }
-        
+
     /**
      * Generate a number representing the number of births,
      * if it can breed.
@@ -156,7 +153,7 @@ public class Antelope extends Animal
     {
         return age >= BREEDING_AGE;
     }
-    
+
     /**
      * Look for shrub adjacent to the current location.
      * Only the first live shrub is eaten.
@@ -181,7 +178,7 @@ public class Antelope extends Animal
         }
         return null;
     }
-    
+
     /**
      * Look at surrounding antelopes and there is a possibility that 
      * the disease spreads.
@@ -191,19 +188,18 @@ public class Antelope extends Animal
         Field field = getField();
         List<Location> adjacent = field.adjacentLocations(getLocation());
         Iterator<Location> it = adjacent.iterator();
-        
+
         double probability = 0.05;
-        
-        
+
         while(it.hasNext()) {
             Object animal = field.getObjectAt(getLocation());
             Location where = it.next();
             Object nextAnimal = field.getObjectAt(where);
-            
+
             if(nextAnimal instanceof Antelope) {
                 Antelope antelope = (Antelope) animal;
                 Antelope nextAntelope = (Antelope) nextAnimal;
-                
+
                 if(antelope.getIsDiseased() && !nextAntelope.getIsDiseased()) {
                     if(rand.nextDouble() <= probability) {
                         nextAntelope.setIsDiseased();
@@ -213,7 +209,7 @@ public class Antelope extends Animal
             }
         }
     }
-    
+
     /**
      * Update the max age.
      */
@@ -221,7 +217,7 @@ public class Antelope extends Animal
     {
         MAX_AGE = 12;
     }
-    
+
     /**
      * Make this antelope more hungry. This could result in the antelope's death.
      */
@@ -232,9 +228,10 @@ public class Antelope extends Animal
             setDead();
         }
     }
-    
+
     /**
      * Change the max age of the antelope depending on whether or not is it diseased.
+     * @return MAX_AGE the max age of the animal, depending on whether it is diseased or not
      */
     private int ageMethod()
     {
@@ -247,7 +244,7 @@ public class Antelope extends Animal
         }
         return MAX_AGE;
     }
-        
+
     /**
      * Change the breeding probability of this antelope based on the current weather conditions.
      */
@@ -261,7 +258,7 @@ public class Antelope extends Animal
             case "Raining":
                 BREEDING_PROBABILITY = 0.12;
                 break;            
-                
+
             default: BREEDING_PROBABILITY = 0.05;
         }
     }

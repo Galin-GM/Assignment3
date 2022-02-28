@@ -28,7 +28,7 @@ public class TimeOfDay
     {
         return isDay;
     }
-    
+
     /**
      * Return whether is it day or night, in String form.
      * Used to display whether it is day or night in the SimulatorView.
@@ -43,7 +43,7 @@ public class TimeOfDay
             return "Night";
         }
     }
-    
+
     /**
      * Change the time of day.
      * If it is daytime flip to night-time.

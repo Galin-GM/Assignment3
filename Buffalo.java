@@ -21,12 +21,12 @@ public class Buffalo extends Animal
     private static final int MAX_LITTER_SIZE = 5;
     // A shared random number generator to control breeding.
     private static final Random rand = Randomizer.getRandom();
-    
+
     // Initial plant food value
     private static final int PLANT_FOOD_VALUE = 10;
- 
+
     // Individual characteristics (instance fields).
-    
+
     // The buffalo's age.
     private int age;
     // Initial antelope food level.
@@ -56,7 +56,7 @@ public class Buffalo extends Animal
             foodLevel = PLANT_FOOD_VALUE;
         }
     }
-    
+
     /**
      * This is what the buffalo does most of the time - it runs 
      * around. Sometimes it will breed or die of old age.
@@ -68,10 +68,10 @@ public class Buffalo extends Animal
         incrementHunger();
         if(isAlive()) {
             giveBirth(newBuffalos); 
-            
+
             // Try to find food.
             Location newLocation = findFood();
-            
+
             if (newLocation == null) {
                 // If you cannot find food, try to move into a free location.
                 newLocation = getField().freeAdjacentLocation(getLocation());
@@ -97,7 +97,7 @@ public class Buffalo extends Animal
             setDead();
         }
     }
-    
+
     /**
      * Look at surrounding antelopes and there is a possibility that 
      * the disease spreads.
@@ -107,19 +107,18 @@ public class Buffalo extends Animal
         Field field = getField();
         List<Location> adjacent = field.adjacentLocations(getLocation());
         Iterator<Location> it = adjacent.iterator();
-        
+
         double probability = 0.05;
-        
-        
+
         while(it.hasNext()) {
             Object animal = field.getObjectAt(getLocation());
             Location where = it.next();
             Object nextAnimal = field.getObjectAt(where);
-            
+
             if(nextAnimal instanceof Buffalo) {
                 Buffalo buffalo = (Buffalo) animal;
                 Buffalo nextBuffalo = (Buffalo) nextAnimal;
-                
+
                 if(buffalo.getIsDiseased() && !nextBuffalo.getIsDiseased()) {
                     if(rand.nextDouble() <= probability) {
                         nextBuffalo.setIsDiseased();
@@ -129,7 +128,7 @@ public class Buffalo extends Animal
             }
         }
     }
-    
+
     /**
      * Update the max age.
      */
@@ -137,7 +136,7 @@ public class Buffalo extends Animal
     {
         MAX_AGE = 18;
     }
-    
+
     /**
      * Check whether or not this buffalo is to give birth at this step.
      * New births will be made into free adjacent locations.
@@ -152,12 +151,12 @@ public class Buffalo extends Animal
         int births = breed();
         List<Location> adjacent = field.adjacentLocations(getLocation());
         Iterator<Location> it = adjacent.iterator();
-        
+
         while(it.hasNext()) {
             Object animal = field.getObjectAt(getLocation());
             Location where = it.next();
             Object nextAnimal = field.getObjectAt(where);
-            
+
             if(nextAnimal instanceof Buffalo) {
                 Buffalo buffalo = (Buffalo) animal;
                 Buffalo nextBuffalo = (Buffalo) nextAnimal;
@@ -171,7 +170,7 @@ public class Buffalo extends Animal
             }
         } 
     }
-        
+
     /**
      * Generate a number representing the number of births,
      * if it can breed.
@@ -194,7 +193,7 @@ public class Buffalo extends Animal
     {
         return age >= BREEDING_AGE;
     }
-    
+
     private Location findFood()
     {
         Field field = getField();
@@ -214,7 +213,7 @@ public class Buffalo extends Animal
         }
         return null;
     }
-    
+
     /**
      * Make this antelope more hungry. This could result in the antelope's death.
      */
@@ -225,7 +224,7 @@ public class Buffalo extends Animal
             setDead();
         }
     }
-    
+
     /**
      * Change the max age of the buffalo depending on whether or not is it diseased.
      */
@@ -241,7 +240,7 @@ public class Buffalo extends Animal
         }
         return MAX_AGE;
     }
-    
+
     /**
      * Change the breeding probability of this buffalo based on the current weather conditions.
      */
@@ -255,7 +254,7 @@ public class Buffalo extends Animal
             case "Raining":
                 BREEDING_PROBABILITY = 0.1;
                 break;            
-                
+
             default: BREEDING_PROBABILITY = 0.05;
         }
     }

@@ -12,10 +12,10 @@ import java.util.Random;
 public class Lion extends Animal
 {
     // Characteristics shared by all lions (class variables).
-    
+
     // The age at which a lion can start to breed.
     private static final int BREEDING_AGE = 12;
-    
+
     // The likelihood of a lion breeding.
     private static double BREEDING_PROBABILITY;
     // The maximum number of births.
@@ -27,7 +27,7 @@ public class Lion extends Animal
 
     // A shared random number generator to control breeding.
     private static final Random rand = Randomizer.getRandom();
-    
+
     // Individual characteristics (instance fields).
     // The lion's age.
     private int age;
@@ -57,7 +57,7 @@ public class Lion extends Animal
             foodLevel = ANTELOPE_FOOD_VALUE;
         }
     }
-    
+
     /**
      * This is what the lion does most of the time: it hunts for
      * antelopes and buffalo. In the process, it might breed, die of hunger,
@@ -99,7 +99,7 @@ public class Lion extends Animal
             setDead();
         }
     }
-    
+
     /**
      * Make this lion more hungry. This could result in the lion's death.
      */
@@ -110,7 +110,7 @@ public class Lion extends Animal
             setDead();
         }
     }
-    
+
     /**
      * Look for antelopes/buffalos adjacent to the current location.
      * Can only eat under a certain amount of hunger.
@@ -120,33 +120,33 @@ public class Lion extends Animal
     private Location findFood()
     {
         if(foodLevel < (ANTELOPE_FOOD_VALUE * 0.7)) {
-        Field field = getField();
-        List<Location> adjacent = field.adjacentLocations(getLocation());
-        Iterator<Location> it = adjacent.iterator();
-        while(it.hasNext()) {
-            Location where = it.next();
-            Object animal = field.getObjectAt(where);
-            if(animal instanceof Antelope){
-                Antelope antelope = (Antelope) animal;
-                if(antelope.isAlive()) { 
-                    antelope.setDead();
-                    foodLevel = ANTELOPE_FOOD_VALUE;
-                    return where;
+            Field field = getField();
+            List<Location> adjacent = field.adjacentLocations(getLocation());
+            Iterator<Location> it = adjacent.iterator();
+            while(it.hasNext()) {
+                Location where = it.next();
+                Object animal = field.getObjectAt(where);
+                if(animal instanceof Antelope){
+                    Antelope antelope = (Antelope) animal;
+                    if(antelope.isAlive()) { 
+                        antelope.setDead();
+                        foodLevel = ANTELOPE_FOOD_VALUE;
+                        return where;
+                    }
+                }
+                else if(animal instanceof Buffalo) {
+                    Buffalo buffalo = (Buffalo) animal;
+                    if(buffalo.isAlive()) {
+                        buffalo.setDead();
+                        foodLevel = BUFFALO_FOOD_VALUE;
+                        return where;
+                    }
                 }
             }
-            else if(animal instanceof Buffalo) {
-                Buffalo buffalo = (Buffalo) animal;
-                if(buffalo.isAlive()) {
-                    buffalo.setDead();
-                    foodLevel = BUFFALO_FOOD_VALUE;
-                    return where;
-                }
-            }
-        }
         }
         return null;
     }
-    
+
     /**
      * Look at surrounding lions and there is a possibility that 
      * the disease spreads.
@@ -156,19 +156,18 @@ public class Lion extends Animal
         Field field = getField();
         List<Location> adjacent = field.adjacentLocations(getLocation());
         Iterator<Location> it = adjacent.iterator();
-        
+
         double probability = 0.05;
-        
-        
+
         while(it.hasNext()) {
             Object animal = field.getObjectAt(getLocation());
             Location where = it.next();
             Object nextAnimal = field.getObjectAt(where);
-            
+
             if(nextAnimal instanceof Lion) {
                 Lion lion = (Lion) animal;
                 Lion nextLion = (Lion) nextAnimal;
-                
+
                 if(lion.getIsDiseased() && !nextLion.getIsDiseased()) {
                     if(rand.nextDouble() <= probability) {
                         nextLion.setIsDiseased();
@@ -178,7 +177,7 @@ public class Lion extends Animal
             }
         }
     }
-    
+
     /**
      * Check whether or not this lion is to give birth at this step.
      * New births will be made into free adjacent locations.
@@ -193,12 +192,12 @@ public class Lion extends Animal
         int births = breed();
         List<Location> adjacent = field.adjacentLocations(getLocation());
         Iterator<Location> it = adjacent.iterator();
-        
+
         while(it.hasNext()) {
             Object animal = field.getObjectAt(getLocation());
             Location where = it.next();
             Object nextAnimal = field.getObjectAt(where);
-            
+
             if(nextAnimal instanceof Lion) {
                 Lion lion = (Lion) animal;
                 Lion nextLion = (Lion) nextAnimal;
@@ -212,7 +211,7 @@ public class Lion extends Animal
             }
         } 
     }
-        
+
     /**
      * Generate a number representing the number of births,
      * if it can breed.
@@ -234,7 +233,7 @@ public class Lion extends Animal
     {
         return age >= BREEDING_AGE;
     }
-    
+
     /**
      * Change the max age of the lion depending on whether or not is it diseased.
      */
@@ -250,7 +249,7 @@ public class Lion extends Animal
         }
         return MAX_AGE;
     }
-    
+
     /**
      * Update the max age.
      */
@@ -258,7 +257,7 @@ public class Lion extends Animal
     {
         MAX_AGE = 36;
     }
-    
+
     /**
      * Change the breeding probability of this lion based on the current weather conditions.
      */
@@ -272,7 +271,7 @@ public class Lion extends Animal
             case "Raining":
                 BREEDING_PROBABILITY = 0.2;
                 break;            
-                
+
             default: BREEDING_PROBABILITY = 0.05;
         }
     }

@@ -25,11 +25,11 @@ public class Simulator
     // The probability that a antelope will be created in any given grid position.
     private static final double ANTELOPE_CREATION_PROBABILITY = 0.06*0.5;
     // The probability that a buffalo will be created in any given grid position.
-    private static final double BUFFALO_CREATION_PROBABILITY = 0.07*0.5; 
+    private static final double BUFFALO_CREATION_PROBABILITY = 0.07*0.55; 
     // The probability that a tiger will be created in any given grid position.
-    private static final double TIGER_CREATION_PROBABILITY = 0.02*0.75;
+    private static final double TIGER_CREATION_PROBABILITY = 0.02*0.83;
     // The probability that a hyena will be created in any given grid position.
-    private static final double HYENA_CREATION_PROBABILITY = 0.03*0.5;
+    private static final double HYENA_CREATION_PROBABILITY = 0.03*0.57;
     // The probability that a shrub will be created in any given grid position.
     private static final double SHRUB_CREATION_PROBABILITY = 0.1*0.3;
 
@@ -98,7 +98,7 @@ public class Simulator
      */
     public void runLongSimulation()
     {
-        simulate(4000);
+        simulate(1200);
     }
 
     /**
@@ -123,9 +123,10 @@ public class Simulator
     {
         step++;
         trackTime();
-        weatherEffectSpecie();      
-        naturalDisaster(0.001);
-
+        weatherEffectSpecie();
+        if(step>300) {
+            naturalDisaster(0.003);
+        }
         // Provide space for newborn animals.
         List<Species> newSpecies = new ArrayList<>();        
         // Let all rabbits act.
@@ -208,6 +209,10 @@ public class Simulator
         }
     }
 
+    /**
+     * Every 12 steps flip the time to night or day and pick a
+     * random weather.
+     */
     private void trackTime() {
         if (step % 12 == 0) {
             timeTracker.flipTime();
@@ -229,6 +234,9 @@ public class Simulator
         }
     }
 
+    /**
+     * Influences the species behaviour based on the current weather.
+     */
     private void weatherEffectSpecie()
     {
         Lion.weatherInfluence(weatherTracker.getCurrentWeather());
@@ -239,11 +247,17 @@ public class Simulator
         Shrub.weatherInfluence(weatherTracker.getCurrentWeather());
     }
 
+    /**
+     * Chance that a natural disaster occurs and wipes out a large portion 
+     * of the simulation.
+     * @param probability The probability of the natural disaster occuring
+     */
     private void naturalDisaster(double probability)
     {
         Random rand = Randomizer.getRandom();
 
         if(rand.nextDouble() <= probability) {
+            System.out.println("success" + step);
             for(Iterator<Species> it = species.iterator(); it.hasNext(); ) {
                 Species specie = it.next();
 
@@ -252,14 +266,8 @@ public class Simulator
                         specie.setDead();
                     }
                 }
-
-                // else if(specie instanceof Shrub) {
-                // if(rand.nextDouble() <= 0.00) {
-                // specie.setDead();
-                // }
-                // }
                 else if (specie instanceof Antelope || specie instanceof Buffalo){
-                    if(rand.nextDouble() <= 0.4) {
+                    if(rand.nextDouble() <= 0.5) {
                         specie.setDead();
                     }
                 }

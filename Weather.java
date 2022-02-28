@@ -11,13 +11,13 @@ public class Weather
     // Arrays that hold all the types of weather for day and night.
     private ArrayList<String> dayTypesOfWeather;
     private ArrayList<String> nightTypesOfWeather;
-    
+
     // The current weather of the simulation.
     private String currentWeather;
-    
+
     // Boolean used to flip between selecting daytime weather and night-time weather.
     private boolean flip;
-    
+
     // A random number generator to select random position in array.
     private static final Random rand = Randomizer.getRandom();
 
@@ -32,17 +32,17 @@ public class Weather
         // Add all types of day time weathers to the array list.
         dayTypesOfWeather.add("Sunny");
         dayTypesOfWeather.add("Raining");
-        
+
         // Create ArrayList object for night time weathers.
         nightTypesOfWeather = new ArrayList<>();
         // Add all types of night time weathers to the array list.
         nightTypesOfWeather.add("Clear");
         nightTypesOfWeather.add("Raining");
-        
+
         // Set the weather at which the simulation starts.
         currentWeather = "Sunny";
     }
-    
+
     /**
      * Select a random weather type from the day or night array list.
      * Store the weather type selected in the currentWeather field.
@@ -58,7 +58,7 @@ public class Weather
             flip = !flip;
         }
     }
-    
+
     /**
      * Returns the current weather of the simulation.
      * @return the current weather of the simulation in String form.

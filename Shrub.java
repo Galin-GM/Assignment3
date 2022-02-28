@@ -18,10 +18,10 @@ public class Shrub extends Plant
     private static final Random rand = Randomizer.getRandom();
 
     // Individual characteristics (instance fields).
-    
+
     // The shrub's age.
     private int age;
-    
+
     /**
      * Create a new shrub. A shrub may be created with age
      * zero (a new born) or with a random age.
@@ -40,7 +40,6 @@ public class Shrub extends Plant
         }
     }
 
-    
     /**
      * This is what the shrub does most of the time - it grows new shrub. 
      * Sometimes it will breed or die of old age.
@@ -53,7 +52,7 @@ public class Shrub extends Plant
             growPlants(newShrub);
         }
     }
-    
+
     /**
      * Check whether or not this shrub is to give birth at this step.
      * New births will be made into free adjacent locations.
@@ -66,14 +65,14 @@ public class Shrub extends Plant
         List<Location> adjacent = field.adjacentLocations(getLocation());
         Iterator<Location> it = free.iterator();
         int growths = growth();
-        
+
         for(int b = 0; b < growths && free.size() > 0; b++) {
             Location loc = free.remove(0);
             Shrub youngShrub = new Shrub(true, field, loc, false);
             newShrub.add(youngShrub);
         }
     }
-    
+
     /**
      * Generate a number representing the number of births,
      * if it can breed.
@@ -88,7 +87,7 @@ public class Shrub extends Plant
         }
         return births;
     }
-    
+
     /**
      * A shrub can breed if it has reached the breeding age.
      * @return true if the shrub can breed, false otherwise.
@@ -97,7 +96,7 @@ public class Shrub extends Plant
     {
         return age >= SPAWNING_AGE;
     }
-    
+
     /**
      * Increase the age.
      * This could result in the shrub's death.
@@ -109,7 +108,7 @@ public class Shrub extends Plant
             setDead();
         }
     }
-    
+
     /**
      * Change the spawning probability of this shrub based on the current weather conditions.
      */
@@ -123,7 +122,7 @@ public class Shrub extends Plant
             case "Raining":
                 NEW_SHRUB_PROBABILITY = 0.19;
                 break;            
-                
+
             default: NEW_SHRUB_PROBABILITY = 0.05;
         }
     }
