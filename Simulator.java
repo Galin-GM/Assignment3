@@ -257,7 +257,6 @@ public class Simulator
         Random rand = Randomizer.getRandom();
 
         if(rand.nextDouble() <= probability) {
-            System.out.println("success" + step);
             for(Iterator<Species> it = species.iterator(); it.hasNext(); ) {
                 Species specie = it.next();
 
